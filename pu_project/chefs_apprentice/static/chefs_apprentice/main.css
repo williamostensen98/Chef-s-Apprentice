@@ -3,12 +3,12 @@ body {
   color: #333333;
   margin-top: 5rem;
 }
-.content img{
+/* .content img{
   margin: 10px;
   float:right;
   height: 200px;
   width: 300px;
-} 
+}  */
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
