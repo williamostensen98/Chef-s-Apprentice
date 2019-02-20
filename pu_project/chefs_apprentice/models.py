@@ -11,3 +11,12 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Recipe (models.Model):
+    title = models.CharField(max_length=100) #tenkt samme som tilhørende post
+    ingredients = models.TextField() #én tekst separert med komma
+    description = models.TextField() #tenkt sammen med content i post
+
+    def __str__(self):
+        return self.title

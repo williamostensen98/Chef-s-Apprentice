@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'chefs_apprentice.apps.ChefsApprenticeConfig',
-    'users.apps.UsersConfig',
+    'chefs_apprentice',
+    'users',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
