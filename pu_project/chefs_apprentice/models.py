@@ -13,9 +13,27 @@ class Post(models.Model):
         return self.title
 
 
+class Ingredient (models.Model):
+    name = models.CharField(max_length=50)
+    quantity = models.IntegerField(blank=False) #Må settes en mengde
+    units = ( #forskjellige enheter fra scrollmeny
+        ('liter', 'liter'),
+        ('dl', 'dl'),
+        ('ss', 'ss'),
+        ('ts', 'ts'),
+        ('kg', 'kg'),
+        ('gram', 'gram'),
+        ('boks', 'boks'),
+    )
+    unit = models.CharField(choices=units, max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Recipe (models.Model):
     title = models.CharField(max_length=100) #tenkt samme som tilhørende post
-    ingredients = models.TextField() #én tekst separert med komma
+    ingredients = models.ManyToManyField(Ingredient, blank=False) #liste av ingrediensobjekter
     description = models.TextField() #tenkt sammen med content i post
 
     def __str__(self):
