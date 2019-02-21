@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Post
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 @login_required
 def home(request):
@@ -14,3 +15,12 @@ def home(request):
 @login_required
 def about(request):
     return render(request, 'chefs_apprentice/about.html', {'title': 'About'})
+
+def post_list(request):
+    queryset = Post.objects.active()
+    query = request.GET.get("q")
+    if query:
+        queryset = queryset.filter(
+            Q(title__icontains=query)|
+            Q(content__icontains=query)
+            )
