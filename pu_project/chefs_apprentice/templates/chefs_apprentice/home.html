@@ -1,16 +1,16 @@
 {% extends "chefs_apprentice/base.html" %}
 {% block content%}
-  {% for post in posts %}
+  {% for recipe in Recipe %}
       <article class="media content-section">
         <div class="media-body">
           <div class="article-metadata">
-            <small>Posted by: <a class="mr-2" href="profile">{{ post.author }}</a></small>
-            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+            <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
+            <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
           </div>
           <!-- <div class="content"> -->
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
-            <p class="article-content">{{ post.content }}</p>
+            <p class="article-content">{{ recipe.description }}</p>
           <!-- </div> -->
         </div>
       </article>

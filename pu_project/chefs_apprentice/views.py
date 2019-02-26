@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from .models import Post
+from .models import Recipe, Post
 from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'Recipe': Recipe.objects.all(),
+        'Post': Post.objects.all()
     }
     return render(request, 'chefs_apprentice/home.html', context)
 
