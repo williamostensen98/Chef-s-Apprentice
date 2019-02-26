@@ -20,14 +20,13 @@ class Recipe(models.Model):
     def __str__(self):
         return self.title
 
-class Post(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredients = Recipe.ingredients
-    title = Recipe.title
-    description = Recipe.description
-    date_posted = Recipe.date_posted
-    author = Recipe.author
-
-    def __str__(self):
-        return self.title
-
+# class Post(models.Model):
+#     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+#     ingredients = Recipe.ingredients
+#     title = Recipe.title
+#     description = Recipe.description
+#     date_posted = Recipe.date_posted
+#     author = Recipe.author
+#
+#     def __str__(self):
+#         return self.title

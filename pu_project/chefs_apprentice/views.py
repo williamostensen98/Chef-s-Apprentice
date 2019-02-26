@@ -1,20 +1,21 @@
 from django.shortcuts import render
-from .models import Recipe, Post
+from .models import Recipe
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 @login_required
 def home(request):
-    queryset = Post.objects.all()
+    queryset = Recipe.objects.all()
     query = request.GET.get("q")
     if query:
         queryset = queryset.filter(
             Q(title__icontains=query)|
-            Q(content__icontains=query)
+            Q(description__icontains=query)
+
             )
     context = {
-        'Recipe': Recipe.objects.all(),
-        'Post': queryset
+        # 'Recipe': Recipe.objects.all(),
+        'Recipe': queryset
     }
     return render(request, 'chefs_apprentice/home.html', context)
 
