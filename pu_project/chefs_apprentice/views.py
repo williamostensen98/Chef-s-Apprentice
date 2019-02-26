@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Recipe
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -24,3 +24,10 @@ def home(request):
 @login_required
 def about(request):
     return render(request, 'chefs_apprentice/about.html', {'title': 'About'})
+
+def view_recipe(request, pk, recipetitle):
+    recipe=get_object_or_404(Recipe, pk=pk)
+    context = {
+        "recipe":recipe,
+    }
+    return render(request, 'chefs_apprentice/recipe.html', context)
