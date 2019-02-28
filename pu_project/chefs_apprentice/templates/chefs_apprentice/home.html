@@ -18,5 +18,17 @@
           <!-- </div> -->
         </div>
       </article>
-  {% endfor  %}
+    {% endfor  %}
+    {% for r in recipies %}
+        <article class="media content-section">
+          <div class="media-body">
+            <!-- <div class="content"> -->
+              <h2><a class="article-title" href="#">{{ r.title }}</a></h2>
+              <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
+              <p class="article-content">{{ r.ingredients }}</p>
+              <p class="article-content">{{ r.description }}</p>
+            <!-- </div> -->
+          </div>
+        </article>
+    {% endfor  %}
 {% endblock content %}
