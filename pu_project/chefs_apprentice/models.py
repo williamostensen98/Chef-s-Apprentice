@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Ingredient(models.Model):
     name = models.CharField(max_length=50)
@@ -19,17 +20,5 @@ class Recipe(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
 
-
     def __str__(self):
         return self.title
-
-# class Post(models.Model):
-#     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-#     ingredients = Recipe.ingredients
-#     title = Recipe.title
-#     description = Recipe.description
-#     date_posted = Recipe.date_posted
-#     author = Recipe.author
-#
-#     def __str__(self):
-#         return self.title
