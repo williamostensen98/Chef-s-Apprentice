@@ -53,14 +53,10 @@
           {% block content %}{% endblock %}
         </div>
         <div class="col-md-4">
-        {% if request.user.is_authenticated %} <!-- skjuler sokefelt naar bruker ikke innlogget-->
-          <div class="content-section">
+          {% if request.user.is_authenticated %} <!-- skjuler sokefelt naar bruker ikke innlogget-->
+            <div class="content-section">
               <form id="searchfield" method='GET' action =''>
-                <input type ='text' name = 'q' placeholder ='Search Title' value='{{ request.GET.q}}' />
-                <input type='submit' value ='Search'id="search-btn"/>
-              </form>
-              <form id="searchfield_i" method='GET' action =''>
-                <input type ='text' name = 'q_i' placeholder ='Search ingredients' value='{{ request.GET.q_i}}' />
+                <input type ='text' name = 'q' placeholder ='Search Posts' value='{{ request.GET.q}}' />
                 <input type='submit' value ='Search'id="search-btn"/>
               </form>
             </div>
