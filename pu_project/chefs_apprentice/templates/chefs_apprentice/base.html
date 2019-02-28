@@ -59,6 +59,11 @@
                 <input type ='text' name = 'q' placeholder ='Search Posts' value='{{ request.GET.q}}' />
                 <input type='submit' value ='Search'id="search-btn"/>
               </form>
+              <form id="searchfield_i" method='GET' action =''>
+                <input type ='text' name = 'q_i' placeholder ='Search ingredients' value='{{ request.GET.q_i}}' />
+                <input type='submit' value ='Search'id="search-btn"/>
+              </form>
+
             </div>
           {% endif %}
           <div class="content-section">
