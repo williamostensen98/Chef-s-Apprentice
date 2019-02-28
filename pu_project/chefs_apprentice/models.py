@@ -17,7 +17,8 @@ class Recipe(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)  # DateTimeField(auto_now=True) ville satt datoen til akkurat nå
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
     image = models.ImageField(default='default.jpg', upload_to='food_pics')
-    
+    visible = models.BooleanField(default=True)
+
 
     def __str__(self):
         return self.title
