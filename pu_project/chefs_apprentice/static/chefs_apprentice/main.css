@@ -46,6 +46,7 @@ ul {
 
 .article-title {
   color: #444444;
+  font-size: 2.5rem;
 }
 
 a.article-title:hover {
@@ -55,6 +56,8 @@ a.article-title:hover {
 
 .article-content {
   white-space: pre-line;
+  margin: 15px 20px;
+  text-align: justify;
 }
 
 .article-img {
@@ -97,4 +100,25 @@ a.article-title:hover {
 #search-btn{
   background-color:black;
   color:white;
+}
+
+.food_image{
+  height: 250px;
+  width: 300px;
+  float: right;
+  margin: 10px 20px;
+  border-radius: 10px;
+
+}
+
+.certification{
+  float:right;
+}
+
+.verified{
+  height: 15px;
+  width: 15px;
+  float: right;
+  margin-top: 2px;
+  margin-left: 10px;
 }
