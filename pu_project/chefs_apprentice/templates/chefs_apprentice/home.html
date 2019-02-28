@@ -5,10 +5,14 @@
         <div class="media-body">
           <div class="article-metadata">
             <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
+
             <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+            <small class="certification">{% if recipe.author.is_staff %}<i>Certified Chef</i><img class="verified" src="media/verified.png" alt="#">{% endif %}</small>
+
           </div>
           <!-- <div class="content"> -->
             <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
+            <img class="food_image" src="{{ recipe.image.url }}" alt="#">
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
             <p class="article-content">{{ recipe.description }}</p>
           <!-- </div> -->
