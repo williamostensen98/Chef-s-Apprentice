@@ -56,7 +56,7 @@
           {% if request.user.is_authenticated %} <!-- skjuler sokefelt naar bruker ikke innlogget-->
             <div class="content-section">
               <form id="searchfield" method='GET' action =''>
-                <input type ='text' name = 'q' placeholder ='Search Posts' value='{{ request.GET.q}}' />
+                <input type ='text' name = 'q' placeholder ='Search recipes' value='{{ request.GET.q}}' />
                 <input type='submit' value ='Search'id="search-btn"/>
               </form>
               <form id="searchfield_i" method='GET' action =''>
