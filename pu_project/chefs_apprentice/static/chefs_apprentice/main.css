@@ -97,9 +97,10 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-#search-btn{
+.btn{
   background-color:black;
   color:white;
+  padding:3px;
 }
 
 .food_image{
