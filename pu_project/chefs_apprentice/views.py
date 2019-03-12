@@ -69,3 +69,9 @@ def view_recipe(request, pk, recipetitle):
         "recipe":recipe,
     }
     return render(request, 'chefs_apprentice/recipe.html', context)
+
+def downloadedrecipes(request):
+    return render(request, 'chefs_apprentice/downloadedrecipes.html', {'title': 'downloadedrecipes'})
+
+def favoriterecipes(request):
+        return render(request, 'chefs_apprentice/favoriterecipes.html', {'title': 'favoriterecipes'})

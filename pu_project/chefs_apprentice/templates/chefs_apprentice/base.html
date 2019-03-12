@@ -30,7 +30,14 @@
             <div class="navbar-nav">
               {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <div class="dropdown">
+                  <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                    <div class="dropdown-content">
+                    <a href="{% url 'downloadedrecipes' %}">Downloaded recipes</a>
+                     <a href="{% url 'favoriterecipes'%}">Favorite recipes</a>
+                     <a href="#">My recipes</a>
+                 </div>
+               </div>
               {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
@@ -57,11 +64,11 @@
             <div class="content-section">
               <form id="searchfield" method='GET' action =''>
                 <input type ='text' name = 'q' placeholder ='Search recipes' value='{{ request.GET.q}}' />
-                <input type='submit' value ='Search'class="btn"/>
+                <input type='submit' value ='Search'class="button"/>
               </form>
               <form id="searchfield_i" method='GET' action =''>
                 <input type ='text' name = 'q_i' placeholder ='Search ingredients' value='{{ request.GET.q_i}}' />
-                <input type='submit' value ='Search'class="btn"/>
+                <input type='submit' value ='Search'class="button"/>
               </form>
 
             </div>
