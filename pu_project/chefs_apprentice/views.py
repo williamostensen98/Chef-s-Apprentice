@@ -75,3 +75,7 @@ def downloadedrecipes(request):
 
 def favoriterecipes(request):
         return render(request, 'chefs_apprentice/favoriterecipes.html', {'title': 'favoriterecipes'})
+
+
+def myrecipes(request):
+        return render(request, 'chefs_apprentice/myrecipes.html', {'title': 'myrecipes'})

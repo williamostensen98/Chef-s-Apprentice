@@ -8,7 +8,8 @@ urlpatterns = [
     path('about/', views.about, name='chef-about'),
     path('<str:recipetitle>/<pk>', views.view_recipe, name="view_recipe"),
     path('downloadedrecipes/', views.downloadedrecipes, name= "downloadedrecipes"),
-    path('favoriterecipes/', views.favoriterecipes, name= "favoriterecipes")
+    path('favoriterecipes/', views.favoriterecipes, name= "favoriterecipes"),
+    path('myrecipes/', views.myrecipes, name= "myrecipes")
 ]
 
 if settings.DEBUG:
