@@ -7,14 +7,38 @@
             <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
           </div>
           <!-- <div class="content"> -->
-            <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
+            <h2><a class="recipeview-title" href="#">{{ recipe.title }}</a></h2>
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <h4> Ingredienser</h4>
+                {%for ingredient in recipe.ingredients.all%}
+                  <p>{{ingredient}}</p>
+                {%endfor%}
+              </div>
+                <div class="col">
+                  <img class="recipe_image" src="{{ recipe.image.url }}" alt="#">
+                </div>
+
+            </div>
+            <h4>Slik gjør du</h4>
+            <p class= "recipe_description">{{ recipe.description }}</p>
+          </div>
+
+
+<!--
+
+            <div class="img_container">
+              <img class="recipe_image" src="{{ recipe.image.url }}" alt="#">
+            </div>
+            <h4> Ingredienser</h4>
             {%for ingredient in recipe.ingredients.all%}
               <p>{{ingredient}}</p>
             {%endfor%}
+            <h4>Slik gjør du</h4>
             <p class="article-content">{{ recipe.description }}</p>
-          <!-- </div> -->
-        </div>
+        </div>-->
       </article>
 
 {% endblock content %}
