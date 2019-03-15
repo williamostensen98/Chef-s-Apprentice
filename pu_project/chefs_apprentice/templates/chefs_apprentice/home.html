@@ -41,4 +41,23 @@
       </article>
     {% endif %}
   {% endfor  %}
+
+  <div class="pagination">
+    <span class="step-links">
+        {% if recipies.has_previous %}
+            <!-- <a href="?page=1">&laquo; first</a> -->
+            <a href="?page={{ recipies.previous_page_number }}&q={{ request.GET.q }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ recipies.number }} of {{ recipies.paginator.num_pages }}.
+        </span>
+
+        {% if recipies.has_next %}
+            <a href="?page={{ recipies.next_page_number }}&q={{ request.GET.q }}">next</a>
+            <!-- <a href="?page={{ recipies.paginator.num_pages }}&q={{ request.GET.q }}">last &raquo;</a> -->
+        {% endif %}
+    </span>
+</div>
+
 {% endblock content %}
