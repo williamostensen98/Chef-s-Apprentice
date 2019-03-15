@@ -69,7 +69,7 @@
                   <input type='submit' value ='Search'class="button"/>
                 </form> -->
                 <form id="searchfield" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
-                  <input class="form-control mr-sm-2" type ='text' name = 'q' placeholder ='Search recipes' aria-label="Search" value='{{ request.GET.q}}' />
+                  <input id="titleField" class="form-control mr-sm-2" type ='text' name = 'q' placeholder ='Search recipes' aria-label="Search" value='{{ request.GET.q}}' />
                   <button class="btn btn-rounded btn-mr-sm-2" type="submit">Search</button>
                 </form>
                 <!-- <form class="form-inline md-form mr-auto mb-4" id="searchfield" method='GET' action =''>
@@ -78,10 +78,20 @@
                 </form> -->
 
                 <form id="searchfield_i" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
-                  <input class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Search ingredients' aria-label="Search" value='{{ request.GET.q_i}}' />
+                  <input id="ingredientsField" class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Search ingredients' aria-label="Search" value='{{ request.GET.q_i }}' />
                   <button class="btn btn-rounded btn-mr-sm-2" type="submit">Search</button>
                   <!-- <input type='submit' value ='Search'class="button"/> -->
+                  <input id="resetbtn" type='submit' name="reset" value ='Reset' class="btn" onclick="ingredientsField.value='', titleField.value=''" />
+
                 </form>
+                <label for="sortBy">Sort by: </label>
+                  <select id="dropdown" method="GET" form='searchForm', name="sortBy" value='{{ request.GET.sortBy }}'>
+                    <option value="none">None</option >
+                    <option value="date">Date</option>
+                    <option value="y">y</option>
+                    <option value="z">z</option>
+                  </select>
+
 
             <!-- </div> -->
           {% endif %}

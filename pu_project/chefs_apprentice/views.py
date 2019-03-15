@@ -8,57 +8,106 @@ from django.core.paginator import Paginator
 
 @login_required
 def home(request):
-   queryset = Recipe.objects.all().order_by("-date_posted")
-   recipe = queryset[0]
-   i = recipe.ingredients.all()
+    queryset = Recipe.objects.all() # .order_by("-date_posted")
+    recipe = queryset[0]
+    i = recipe.ingredients.all()
    #print(i)
-   query = request.GET.get("q")
-   if query:
-       queryset = queryset.filter(
-           Q(title__icontains=query)
-           )
+    if request.GET.get("sortBy") == 'date':
+        queryset =  Recipe.objects.all().order_by("-date_posted")
+        context = {
+                'recipies': queryset
+                }
+        return render(request, 'chefs_apprentice/home.html', context)
+    start_list = []
+    for a in queryset:
+        if a.author.is_staff:
+            start_list.append(a)
 
-   query_i = request.GET.get("q_i")
-   if query_i:
-       input = query_i.split(',')
-       ingredients = [x.strip() for x in input]
-       ingredients = list(set(ingredients))
-       queryset = getRecipies(queryset, ingredients)
+    for b in queryset:
+        if b.author.is_staff == False:
+            start_list.append(b)
 
-   context = {
+    query = request.GET.get("q")
+
+
+    if query:
+        queryset = queryset.filter(
+            Q(title__icontains=query)
+            )
+
+    query_i = request.GET.get("q_i")
+    if query_i:
+        input = query_i.split(',')
+        ingredients = [x.strip() for x in input]
+        ingredients = list(set(ingredients))
+        queryset = getRecipies(queryset, ingredients)
+
+
+    if not query_i and not query:
+        queryset = start_list
+
+    paginator = Paginator(queryset, 5) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    queryset = paginator.get_page(page)
+    context = {
        #'posts': queryset,
-       'recipies': queryset
+        'recipies': queryset
 
-   }
-   return render(request, 'chefs_apprentice/home.html', context)
+    }
+    return render(request, 'chefs_apprentice/home.html', context)
 
 def getRecipies(queryset, ingredients):
-   count = {}
-   print(ingredients)
-   for recipe in queryset:
-       count[recipe] = 0
-       recipe_ingr = recipe.ingredients.all()
-       print(recipe_ingr)
-       for i in recipe_ingr:
+    count = {}
+    print(ingredients)
+    for recipe in queryset:
+        count[recipe] = 0
+        recipe_ingr = recipe.ingredients.all()
+        print(recipe_ingr)
+        for i in recipe_ingr:
    #    for i in recipe_ingr
-           for j in ingredients:
-               if i.name==j:
-                   count[recipe] += 1
-   if count[recipe]==0:
-       del count[recipe]
+            for j in ingredients:
+                if i.name==j:
+                    count[recipe] += 1
+        if count[recipe] == 0:
+            del count[recipe]
 
    # Sorting by number of ingredients matched
-   sorted_count = sorted(count.items(), key=lambda kv: kv[1], reverse=True)
+    sorted_count = sorted(count.items(), key=lambda kv: kv[1], reverse=True)
 
+    n = len(sorted_count)
+    top = []
+    for i in range(n):
+        temp = i
+        if sorted_count[i][0].author.is_staff and i != 0:
+            counter = i-1
+            for j in range(i, 0, -1):
+                if sorted_count[i][1] < sorted_count[counter][1]:
+                    break
+                counter -= 1
+                temp -= 1
+        top.insert(temp, sorted_count[i][0])
+    return top
+
+   # n = len(sorted_count)
+   #
+   # # Extracting top n recipies
+   # top = []
+   # for i in range(n):
+   #     # top.append(sorted_count[i][0])
+   #     temp = i
+   #     if sorted_count[i][0].author.is_staff and i != 0:
+   #         counter = i-1
+   #         for j in range(i,0,-1):
+   #             if sorted_count[i][0] < sorted_count[counter][1]:
+   #                 break
+   #          counter -= 1
+   #              temp -= 1
+   #      top.insert(temp, sorted_count[i][0])
+   #
+   #  return top
    # List of recipies with highest match-count in descending order
-   n = min(len(sorted_count), 5)
 
-   # Extracting top n recipies
-   top = []
-   for i in range(n):
-       top.append(sorted_count[i][0])
-
-   return top
 
 # def about(request):
 #     return HttpResponse("<h1>About Page</h1>")

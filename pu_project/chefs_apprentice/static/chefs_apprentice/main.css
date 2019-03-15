@@ -134,6 +134,9 @@ a.article-title:hover {
   padding:2px;
   /* border-radius: 5px; */
 }
+#resetbtn{
+  margin-left: 10px;
+}
 
 .food_image{
   height: 250px;
