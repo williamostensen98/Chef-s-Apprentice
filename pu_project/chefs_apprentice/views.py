@@ -2,10 +2,13 @@ from django.shortcuts import render, get_object_or_404
 from .models import Recipe
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.views.generic import ListView
+from django.core.paginator import Paginator
+
 
 @login_required
 def home(request):
-   queryset = Recipe.objects.all()
+   queryset = Recipe.objects.all().order_by("-date_posted")
    recipe = queryset[0]
    i = recipe.ingredients.all()
    #print(i)
@@ -79,3 +82,10 @@ def favoriterecipes(request):
 
 def myrecipes(request):
         return render(request, 'chefs_apprentice/myrecipes.html', {'title': 'myrecipes'})
+
+
+# class RecipeListView(ListView):
+#     model = Recipe
+#     template_name = 'chefs_apprentice/home.html'
+#     context_object_name = 'recipies'
+#
