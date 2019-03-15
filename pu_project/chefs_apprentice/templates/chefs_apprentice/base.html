@@ -59,21 +59,33 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
-          {% if request.user.is_authenticated %} <!-- skjuler sokefelt naar bruker ikke innlogget-->
-            <div class="content-section">
-              <form id="searchfield" method='GET' action =''>
-                <input type ='text' name = 'q' placeholder ='Search recipes' value='{{ request.GET.q}}' />
-                <input type='submit' value ='Search'class="button"/>
-              </form>
-              <form id="searchfield_i" method='GET' action =''>
-                <input type ='text' name = 'q_i' placeholder ='Search ingredients' value='{{ request.GET.q_i}}' />
-                <input type='submit' value ='Search'class="button"/>
-              </form>
+        {% if request.path == "/" %}
+          <div class="col-md-4">
+            <h1>Search</h1>
+            {% if request.user.is_authenticated %} <!-- skjuler sokefelt naar bruker ikke innlogget-->
+              <!-- <div class="content-section"> -->
+                <!-- <form id="searchfield" method='GET' action =''>
+                  <input type ='text' name = 'q' placeholder ='Search recipes' value='{{ request.GET.q}}' />
+                  <input type='submit' value ='Search'class="button"/>
+                </form> -->
+                <form id="searchfield" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
+                  <input class="form-control mr-sm-2" type ='text' name = 'q' placeholder ='Search recipes' aria-label="Search" value='{{ request.GET.q}}' />
+                  <button class="btn btn-rounded btn-mr-sm-2" type="submit">Search</button>
+                </form>
+                <!-- <form class="form-inline md-form mr-auto mb-4" id="searchfield" method='GET' action =''>
+                  <input class="form-control mr-sm-2" type="text" name ='q' placeholder="Search recipes" aria-label="Search" value='{{ request.GET.q}' />
+                  <button class="btn btn-rounded btn-sm my-0" type="submit">Search</button>
+                </form> -->
 
-            </div>
+                <form id="searchfield_i" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
+                  <input class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Search ingredients' aria-label="Search" value='{{ request.GET.q_i}}' />
+                  <button class="btn btn-rounded btn-mr-sm-2" type="submit">Search</button>
+                  <!-- <input type='submit' value ='Search'class="button"/> -->
+                </form>
+
+            <!-- </div> -->
           {% endif %}
-          <div class="content-section">
+          <!-- <div class="content-section">
             <h3>Our Sidebar</h3>
             <p class='text-muted'>You can put any information here you'd like.
               <ul class="list-group">
@@ -83,10 +95,11 @@
                 <li class="list-group-item list-group-item-light">etc</li>
               </ul>
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
     </main>
+    {% endif %}
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
