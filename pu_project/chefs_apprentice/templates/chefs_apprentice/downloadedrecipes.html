@@ -1,13 +1,18 @@
 {% extends "chefs_apprentice/base.html" %}
 {% block content%}
-  <div class="content-section">
-    <div class="media">
-      <div class="media-body">
-        <h2 class="account-heading">Dowloaded Recipes</h2>
 
-      </div>
+<ul class="nav nav-tabs">
+  <li class="nav-item"><a class="nav-link" href="{%url 'profile' %}">Profile</a></li>
+  <li class="nav-item"><a class="nav-link"  href="{%url 'myrecipes' %}">My Recipies</a></li>
+  <li class="nav-item"><a class="nav-link active"  href="#">Downloaded Recipies</a></li>
+  <li class="nav-item"><a class="nav-link"  href="{%url 'favoriterecipes' %}">Favorite Recipies</a></li>
+</ul>
 
-    </div>
-
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Downloaded Recipes</h1>
+    <p class="lead">Here you will find all your downloaded recipes</p>
   </div>
+
+</div>
 {% endblock content %}

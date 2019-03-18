@@ -1,18 +1,22 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Recipe
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
-from django.views.generic import ListView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 
 
 @login_required
 def home(request):
-    queryset = Recipe.objects.all() # .order_by("-date_posted")
+    queryset = Recipe.objects.all().order_by("-date_posted")
     recipe = queryset[0]
-    i = recipe.ingredients.all()
+
+    # i = recipe.ingredients.all()
    #print(i)
-    if request.GET.get("sortBy") == 'date':
+
+
+    if request.GET.get("sortBy"):
         queryset =  Recipe.objects.all().order_by("-date_posted")
         context = {
                 'recipies': queryset
@@ -46,7 +50,7 @@ def home(request):
     if not query_i and not query:
         queryset = start_list
 
-    paginator = Paginator(queryset, 5) # Show 25 contacts per page
+    paginator = Paginator(queryset, 3) # Show 25 contacts per page
 
     page = request.GET.get('page')
     queryset = paginator.get_page(page)
@@ -89,28 +93,41 @@ def getRecipies(queryset, ingredients):
         top.insert(temp, sorted_count[i][0])
     return top
 
-   # n = len(sorted_count)
-   #
-   # # Extracting top n recipies
-   # top = []
-   # for i in range(n):
-   #     # top.append(sorted_count[i][0])
-   #     temp = i
-   #     if sorted_count[i][0].author.is_staff and i != 0:
-   #         counter = i-1
-   #         for j in range(i,0,-1):
-   #             if sorted_count[i][0] < sorted_count[counter][1]:
-   #                 break
-   #          counter -= 1
-   #              temp -= 1
-   #      top.insert(temp, sorted_count[i][0])
-   #
-   #  return top
-   # List of recipies with highest match-count in descending order
+# Oppretting av oppskrift og validering av dette
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    model = Recipe
+    fields = ['title','ingredients','image', 'description']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Recipe
+    fields = ['title','ingredients','image', 'description']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        recipe = self.get_object()
+        if self.request.user == recipe.author:
+            return True
+        return False
+
+class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Recipe
+    success_url = '/'
+
+    def test_func(self):
+        recipe = self.get_object()
+        if self.request.user == recipe.author:
+            return True
+        return False
 
 
-# def about(request):
-#     return HttpResponse("<h1>About Page</h1>")
 @login_required
 def about(request):
     return render(request, 'chefs_apprentice/about.html', {'title': 'About'})
@@ -128,9 +145,21 @@ def downloadedrecipes(request):
 def favoriterecipes(request):
         return render(request, 'chefs_apprentice/favoriterecipes.html', {'title': 'favoriterecipes'})
 
+# View for egne lagde oppskrifter i my account menyen
 
 def myrecipes(request):
-        return render(request, 'chefs_apprentice/myrecipes.html', {'title': 'myrecipes'})
+        queryset = Recipe.objects.all().order_by("-date_posted") # sorter etter sist opprettet
+        paginator = Paginator(queryset, 3) # Show 3 contacts per page
+
+        page = request.GET.get('page') # pagination hvis det er flere sider
+        queryset = paginator.get_page(page)
+        context = {
+           #'posts': queryset,
+            'recipies': queryset
+
+        }
+
+        return render(request, 'chefs_apprentice/myrecipes.html', context)
 
 
 # class RecipeListView(ListView):

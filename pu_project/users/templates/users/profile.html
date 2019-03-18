@@ -1,15 +1,78 @@
 {% extends "chefs_apprentice/base.html" %}
+
 {% block content%}
-    <!-- {% block title %}Profile{% endblock %} -->
-  <div class="content-section">
-    <div class="media">
-      <div class="media-body">
-        <h2 class="account-heading">{{ user.username }}</h2>
-        <p class="text-secondary"> {{ user.email }}</p>
 
-      </div>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Profile
+        </a>
 
+      </li>
+      <li>
+        <a class="nav-link"  href="{%url 'myrecipes' %}">My Recipies
+
+        </a>
+      </li>
+      <li>
+        <a class="nav-link"  href="{%url 'downloadedrecipes' %}">Downloaded Recipies</a>
+      </li>
+      <li>
+        <a class="nav-link"  href="{%url 'favoriterecipes' %}">Favorite Recipies</a>
+      </li>
+    </ul>
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">My Profile</h1>
+
+        <p class="lead">Edit your profile, change your password or create new recipes!</p>
+        <hr class="my-4">
+
+
+        <!-- <a id="new-recipe" class="btn btn-mr-sm-2" href="{%url 'change_password'%}">Change Password</a>-->
+
+        <div id="accordion">
+          <div class="card">
+          <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <h5 class="mb-0">
+              <a class="dropdown-toggle" data-toggle="collapse"  data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              User Information
+              </a>
+            </h5>
+          </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <p class="lead"><b>Username: </b> {{ user.username }}</p>
+            <p class="lead"><b>E-mailadress: </b>  {{ user.email }}</p>  </div>
+        </div>
+        </div>
+
+        </div>
+
+        <div id="accordion">
+          <div class="card">
+          <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <h5 class="mb-0">
+              <a class="dropdown-toggle" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Change password
+              </a>
+            </h5>
+          </div>
+
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+            <p class="lead"> Change your password by clicking this link</p>
+            <a id="new-recipe" class="btn btn-mr-sm-2" href="{%url 'change_password'%}">Change Password</a>
+        </div>
+        </div>
+
+        </div>
     </div>
-    <a href="{%url 'change_password'%}">Change Password</a>
-  </div>
+
+
+
+
+
+
 {% endblock content %}
