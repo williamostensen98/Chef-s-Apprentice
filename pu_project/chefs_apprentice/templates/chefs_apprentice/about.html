@@ -1,12 +1,26 @@
 {% extends "chefs_apprentice/base.html" %}
 {% block content%}
-  <h1>About Page</h1>
+  <!-- <h1>About Page</h1> -->
 
-  <article class="media content-section">
+  
+  <div class="jumbotron">
+    <h1 class="display-4">About Us</h1>
+    <p class="lead">Everyday thousands of norwegians go hungry because they dont know what to make for dinner. At the same time they throw away tons of unused ingredients.</p>
+    <p class="lead"><b>Chef´s Apprentice</b> is here to set an end to this. With certified chefs constantly producing new and delicious recipies and giving the user the option to search for recipies by available ingredients, Chef´s Apprentic will help yopu plan your meals and use all of your ingredients.</p>
+    <hr class="my-4">
+    <p>Explore recipies from expert-chefs from all over the world and get start increasing your use of ingredients so you never have to throw away unused food again.</p>
+    <p class="lead">
+    <a class="btn btn-primary-outline btn-lg" href="{% url 'chef-home' %}" role="button">Explore recipies</a>
+    </p>
+</div>
+
+  <!-- <article class="media content-section">
 
     <div class="container">
       <p>Everyday thousands of norwegians go hungry because they dont know what to make for dinner. At the same time they throw away tons of unused ingredients.</p>
       <p><b>Chef´s Apprentice</b> is here to set an end to this. With certified chefs constantly producing new and delicious recipies and giving the user the option to search for recipies by available ingredients, Chef´s Apprentic will help yopu plan your meals and use all of your ingredients.</p>
     </div>
   </div>
+
+  </article> -->
 {% endblock content %}

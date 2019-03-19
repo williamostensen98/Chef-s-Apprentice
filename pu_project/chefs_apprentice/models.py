@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 # Create your models here.
@@ -17,8 +18,11 @@ class Recipe(models.Model):
     description = models.TextField() #tenkt sammen med content i post
     date_posted = models.DateTimeField(default=timezone.now)  # DateTimeField(auto_now=True) ville satt datoen til akkurat nå
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
-    image = models.ImageField(default='default.jpg', upload_to='food_pics')
+    image = models.ImageField(default='food_pics/default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('view_recipe', kwargs={'recipetitle':self.title, 'pk': self.pk})

@@ -1,10 +1,34 @@
 {% extends "chefs_apprentice/base.html" %}
 {% block content%}
-<h1>Explore Recipes</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+        <h1>Explore Recipes</h1>
+    </div>
+    <!-- <div class="col">
+      <div class="sort">
+
+
+      <label>Sort by: </label>
+        <select name="sortBy" value='{{ request.GET.sortBy }}'>
+          <option value="none">None</option >
+          <option value="date">Date</option>
+          <option value="y">y</option>
+          <option value="z">z</option>
+        </select>
+
+      </div>
+
+    </div> -->
+
+
+    </div>
+</div>
   {% for recipe in recipies %}
     {% if recipe.visible %}
 
-      <article class="media content-section">
+      <article class="media recipe-section">
 
         <div class="container">
 
@@ -12,7 +36,7 @@
 
 
 
-            <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
+            <small>Posted by: <a class="mr-2" href="#">{{ recipe.author }}</a></small>
 
             <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
             <small class="certification">{% if recipe.author.is_staff %}<i>Certified Chef</i><img class="verified" id="certified" src="static/chefs_apprentice/verified.png" alt="#">{% endif %}</small>
@@ -41,20 +65,29 @@
       </article>
     {% endif %}
   {% endfor  %}
+<!-- html for pagination hvis det er flere sider -->
 
   <div class="pagination">
     <span class="step-links">
         {% if recipies.has_previous %}
             <!-- <a href="?page=1">&laquo; first</a> -->
-            <a href="?page={{ recipies.previous_page_number }}&q={{ request.GET.q }}">previous</a>
+            <a class="btn btn-rounded-info mb-4" href="?page={{ recipies.previous_page_number }}&q={{ request.GET.q }}">Previous</a>
         {% endif %}
 
-        <span class="current">
+        <!-- <span class="current">
             Page {{ recipies.number }} of {{ recipies.paginator.num_pages }}.
-        </span>
+        </span> -->
+        {% for num in recipies.paginator.page_range %}
+          {% if recipies.number == num %}
+            <a class="btn btn-secondary active mb-4" href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
+          {% elif num > recipies.number|add:'-3' and num < recipies.number|add:'3' %}
+            <a class="btn btn-rounded-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+
+        {% endfor %}
 
         {% if recipies.has_next %}
-            <a href="?page={{ recipies.next_page_number }}&q={{ request.GET.q }}">next</a>
+            <a class="btn btn-rounded-info mb-4" href="?page={{ recipies.next_page_number }}&q={{ request.GET.q }}">Next</a>
             <!-- <a href="?page={{ recipies.paginator.num_pages }}&q={{ request.GET.q }}">last &raquo;</a> -->
         {% endif %}
     </span>
