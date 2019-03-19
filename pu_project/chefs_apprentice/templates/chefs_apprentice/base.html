@@ -78,12 +78,26 @@
                 </form> -->
 
                 <form id="searchfield_i" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
-                  <input id="ingredientsField" class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Search ingredients' aria-label="Search" value='{{ request.GET.q_i }}' />
-                  <button class="btn btn-rounded btn-mr-sm-2" type="submit">Search</button>
+                  <input id="ingredientsField" class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Add ingredients' aria-label="Search" value='{{ request.GET.q_i }}' />
+                  <input class="btn btn-rounded btn-mr-sm-2" type="submit" name = "addIngredient" value="Add"/>
                   <!-- <input type='submit' value ='Search'class="button"/> -->
-                  <input id="resetbtn" type='submit' name="reset" value ='Reset' class="btn" onclick="ingredientsField.value='', titleField.value=''" />
+                  <input id="resetbtn" type='submit' name="reset" value ='Reset' class="btn" onclick="ingredientsField.value='', titleField.value='', textboxfield.value=''" />
 
                 </form>
+                <body>
+                  <textarea id= "textboxfield" name="ingredientsBox"rows="2" cols="40", readonly="readonly">
+                    {% if current_ingredients %}
+                      {% for i in current_ingredients %}
+                            {{ i }}
+                      {% endfor %}
+                    {% endif %}
+                  </textarea>
+                </body>
+                <form id="search_ingredient" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
+                   <button type='submit' name="search_ingredient" value ='Search'class="btn">Search</button>
+                </form>
+
+
                 <label for="sortBy">Sort by: </label>
                   <select id="dropdown" method="GET" form='searchForm', name="sortBy" value='{{ request.GET.sortBy }}'>
                     <option value="none">None</option >

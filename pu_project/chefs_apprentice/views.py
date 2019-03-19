@@ -6,18 +6,21 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator
 
 
+class curr_i:
+    current_ingredients = set([])
+
+
 @login_required
 def home(request):
     queryset = Recipe.objects.all() # .order_by("-date_posted")
-    recipe = queryset[0]
-    i = recipe.ingredients.all()
-   #print(i)
+
     if request.GET.get("sortBy") == 'date':
         queryset =  Recipe.objects.all().order_by("-date_posted")
         context = {
                 'recipies': queryset
                 }
         return render(request, 'chefs_apprentice/home.html', context)
+
     start_list = []
     for a in queryset:
         if a.author.is_staff:
@@ -35,27 +38,45 @@ def home(request):
             Q(title__icontains=query)
             )
 
+
     query_i = request.GET.get("q_i")
-    if query_i:
+    if request.GET.get("addIngredient"):
         input = query_i.split(',')
         ingredients = [x.strip() for x in input]
         ingredients = list(set(ingredients))
-        queryset = getRecipies(queryset, ingredients)
+        #queryset = getRecipies(queryset, ingredients)
+        print(curr_i.current_ingredients)
+        curr_i.current_ingredients.update(ingredients)
+
+    if request.GET.get("search_ingredient"):
+        queryset = getRecipies(queryset, curr_i.current_ingredients)
 
 
-    if not query_i and not query:
+    if not request.GET.get("search_ingredient") and not query:
         queryset = start_list
+    #if not query_i and not query:
+    #    queryset = start_list
+
+    if request.GET.get("reset"):
+        curr_i.current_ingredients = set([])
 
     paginator = Paginator(queryset, 5) # Show 25 contacts per page
-
     page = request.GET.get('page')
     queryset = paginator.get_page(page)
+
     context = {
        #'posts': queryset,
-        'recipies': queryset
-
+        'recipies': queryset,
+        'current_ingredients': curr_i.current_ingredients
     }
+
+
     return render(request, 'chefs_apprentice/home.html', context)
+
+
+#current_ingredients = set([])
+
+
 
 def getRecipies(queryset, ingredients):
     count = {}
