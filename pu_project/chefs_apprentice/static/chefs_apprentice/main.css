@@ -260,7 +260,7 @@ a.article-title:hover {
 .step-links{
   margin:auto;
 
-=======
+
 /* #dropdownMenuButton{
   background-color: black;
   justify-content: center;
@@ -268,8 +268,9 @@ a.article-title:hover {
   border: none;
   outline: none;
 } */
+}
 
-.recipe_image{
+.recipeimage{
   width: 350px;
   height:300px;
   padding:5px;
