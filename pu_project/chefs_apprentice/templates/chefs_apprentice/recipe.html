@@ -5,7 +5,7 @@
           <div class="article-metadata">
             <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
             <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
-            {% if recipe.author == user %}
+            {% if recipe.author == user or user.is_staff %}
               <a  class="btn btn-secondary btn-sm mt-1 mb-2 " href="{% url 'recipe-update' recipe.title recipe.id %}">Update</a>
               <a  class="btn btn-danger btn-sm  mt-1 mb-2 " href="{% url 'recipe-delete' recipe.title recipe.id %}">Delete</a>
 

@@ -113,7 +113,7 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         recipe = self.get_object()
-        if self.request.user == recipe.author:
+        if self.request.user == recipe.author or self.request.user.is_staff:
             return True
         return False
 
@@ -123,7 +123,7 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         recipe = self.get_object()
-        if self.request.user == recipe.author:
+        if self.request.user == recipe.author or self.request.user.is_staff:
             return True
         return False
 
