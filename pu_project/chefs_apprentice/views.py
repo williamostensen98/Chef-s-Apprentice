@@ -167,3 +167,13 @@ def myrecipes(request):
 #     template_name = 'chefs_apprentice/home.html'
 #     context_object_name = 'recipies'
 #
+def downloadrecipe(request):
+    #post=get_object_or_404(Post, pk=id)
+    template= 'chefs_apprentice/downloadedrecipe.html'
+    post = recipe.objects.all()
+
+    context = {
+    }
+
+
+    return render(request, 'chefs_apprentice/downloadrecipe.html', context)

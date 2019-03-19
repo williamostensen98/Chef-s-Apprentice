@@ -69,7 +69,6 @@ ul {
 }
 
 .article-title {
-
   color: #444444;
   font-size: 1.5rem;
 
@@ -261,4 +260,30 @@ a.article-title:hover {
 .step-links{
   margin:auto;
 
+=======
+/* #dropdownMenuButton{
+  background-color: black;
+  justify-content: center;
+  padding-top: 8px;
+  border: none;
+  outline: none;
+} */
+
+.recipe_image{
+  width: 350px;
+  height:300px;
+  padding:5px;
+  margin-right: 10px
+}
+
+.recipeview-title{
+  font-size: 3rem;
+  color: #444444;
+}
+.recipeview-title:hover{
+  text-decoration: none;
+
+}
+.recipe_description{
+  white-space: pre-line;
 }
