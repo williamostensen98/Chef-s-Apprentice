@@ -4,6 +4,33 @@
     <div class="media">
       <div class="media-body">
         <h2 class="account-heading">Dowloaded Recipes</h2>
+        {% for recipe in recipes%}
+        <div class="article-metadata">
+
+
+
+          <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
+
+          <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+          <small class="certification">{% if recipe.author.is_staff %}<i>Certified Chef</i><img class="verified" id="certified" src="static/chefs_apprentice/verified.png" alt="#">{% endif %}</small>
+
+        </div>
+        <!-- <div class="content"> -->
+        <div class="row">
+
+          <div class="col-sm pt-5">
+              <h2><a class="article-title" href="{%url 'view_recipe' recipetitle=recipe.title pk=recipe.pk%}">{{ recipe.title }}</a></h2>
+              <!-- <small class="article-content">{{ recipe.description }}</small> -->
+              <small class="article-content text-muted"><img class="verified" src="static/chefs_apprentice/spatula.png" alt="#">Enkel</small>
+              <small class="article-content text-muted"><img class="verified" src="static/chefs_apprentice/time.png" alt="#">Under 30 min</small>
+          </div>
+
+          <div class="col-sm">
+            <img class="food_image" src="{{ recipe.image.url }}" alt="#">
+          </div>
+            <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
+        </div>
+        {%endfor%}
 
       </div>
 

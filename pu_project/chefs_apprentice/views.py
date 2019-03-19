@@ -89,13 +89,25 @@ def myrecipes(request):
 #     template_name = 'chefs_apprentice/home.html'
 #     context_object_name = 'recipies'
 #
-def downloadrecipe(request):
-    #post=get_object_or_404(Post, pk=id)
-    template= 'chefs_apprentice/downloadedrecipe.html'
-    post = recipe.objects.all()
+def downloadrecipe(request, id=0):
+    recipe=get_object_or_404(recipe, pk=id)
+    if id!=0 and request.user.is_authenticated:
+        if not recipe.download.filter(id=request.user.id).exists():
+            recipe.download.add(request.user.id)
+        else:
+            recipe.download.remove(request.user.id)
+    return HttpResponseRedirect("/recipe" + id)
 
-    context = {
+
+def download_list(request):
+    user=request.user
+    queryset = user.download.all().order_by("-pk")
+    #paginator = Paginator(queryset, 10)
+    #page = request.GET.get('page')
+    #recipe = paginator.get_page(page)
+    #isExecEd = isExecutiveEditor(request.user)
+    context ={
+    'maintitle': 'Downloaded recipes',
+    'recipes' : queryset
     }
-
-
-    return render(request, 'chefs_apprentice/downloadrecipe.html', context)
+    return render(request, 'chefs_apprentice/downloadedrecipes.html', context)
