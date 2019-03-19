@@ -20,9 +20,14 @@ class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
     image = models.ImageField(default='food_pics/default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
+    download = models.ManyToManyField(User,related_name="downloads",blank=True)
+
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('view_recipe', kwargs={'recipetitle':self.title, 'pk': self.pk})
+        
+class User(models.Model):
+    username = models.CharField(max_length = 100)

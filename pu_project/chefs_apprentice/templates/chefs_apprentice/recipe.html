@@ -15,6 +15,15 @@
           </div>
           <!-- <div class="content"> -->
             <h2><a class="recipeview-title" href="#">{{ recipe.title }}</a></h2>
+            <div id="download-section">
+              <a href="/downloadedrecipes/{{ post.pk }}">
+                <!--{% if not isSaved %}-->
+                <i class="fas fa-file-download fa-2x" style="color:#333333"></i>
+                <!--  {% else %}
+                <i class="fas fa-heart fa-lg"></i>
+                {% endif %}-->
+              </a>
+            </div>
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
           <div class="container">
             <div class="row">
