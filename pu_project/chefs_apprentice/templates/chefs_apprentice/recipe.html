@@ -2,27 +2,59 @@
 {% block content %}
     <article class="media content-section">
         <div class="media-body">
-            <div class="article-metadata">
-                <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
-                <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+          <div class="article-metadata">
+            <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
+            <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+            {% if recipe.author == user or user.is_staff %}
+              <a  class="btn btn-secondary btn-sm mt-1 mb-2 " href="{% url 'recipe-update' recipe.title recipe.id %}">Update</a>
+              <a  class="btn btn-danger btn-sm  mt-1 mb-2 " href="{% url 'recipe-delete' recipe.title recipe.id %}">Delete</a>
+
+
+
+            {% endif %}
+          </div>
+          <!-- <div class="content"> -->
+            <h2><a class="recipeview-title" href="#">{{ recipe.title }}</a></h2>
+            <div id="download-section">
+              <a href="/downloadedrecipes/{{ post.pk }}">
+                <!--{% if not isSaved %}-->
+                <i class="fas fa-file-download fa-2x" style="color:#333333"></i>
+                <!--  {% else %}
+                <i class="fas fa-heart fa-lg"></i>
+                {% endif %}-->
+              </a>
             </div>
-            <!-- <div class="content"> -->
-            <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
-            {% for ingredient in ingredients %}
-                <p>
-                    {% if ingredient.measurement %}
-                        {{ ingredient.measurement }}
-                    {% endif %}
-                    {% if ingredient.unit %}
-                        {{ ingredient.unit }}
-                    {% endif %}
-                    {{ ingredient.ingredient }}
-                </p>
-            {% endfor %}
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <h4> Ingredienser</h4>
+                {%for ingredient in recipe.ingredients.all%}
+                  <p>{{ingredient}}</p>
+                {%endfor%}
+              </div>
+                <div class="col">
+                  <img class="recipeimage" src="{{ recipe.image.url }}" alt="#">
+                </div>
+
+            </div>
+            <h4>Slik gjør du</h4>
+            <p class= "recipe_description">{{ recipe.description }}</p>
+          </div>
+
+
+<!--
+
+            <div class="img_container">
+              <img class="recipe_image" src="{{ recipe.image.url }}" alt="#">
+            </div>
+            <h4> Ingredienser</h4>
+            {%for ingredient in recipe.ingredients.all%}
+              <p>{{ingredient}}</p>
+            {%endfor%}
+            <h4>Slik gjør du</h4>
             <p class="article-content">{{ recipe.description }}</p>
-            <!-- </div> -->
-        </div>
-    </article>
+        </div>-->
+      </article>
 
 {% endblock content %}

@@ -36,12 +36,22 @@ ul {
   color: #ffffff;
 
 }
+/* .nav-link:hover{
+  background-color: #eee;
+  color: #2f343f;
+} */
+
+/* .btn:focus{
+  outline: none !important;
+} */
+
+
 
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
 }
 
-.content-section {
+.recipe-section {
   background: #ffffff;
   padding: 0;
   border: 1px solid #dddddd;
@@ -49,9 +59,16 @@ ul {
   margin-bottom: 20px;
 
 }
+.content-section {
+  background: #ffffff;
+  padding: 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+
+}
 
 .article-title {
-
   color: #444444;
   font-size: 1.5rem;
 
@@ -90,6 +107,9 @@ a.article-title:hover {
 
 }
 
+
+
+
 .article-img {
   height: 65px;
   width: 65px;
@@ -101,11 +121,11 @@ a.article-title:hover {
   margin-bottom: 0;
   border-bottom: 1px solid #e3e3e3
 }
-.article-metadata a{
+/* .article-metadata a{
   color:#444444;
-}
+} */
 .article-metadata a:hover {
-  color: #428bca;
+  /* color: #428bca; */
   /* color: #000000; */
   text-decoration: none;
 }
@@ -125,17 +145,29 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+  /* float:left;
+  margin:auto; */
 }
 
 .btn{
+
   background-color:#2F343F;
   color:white;
 
-  padding:2px;
-  /* border-radius: 5px; */
+
+  /* padding:2px;
+  border-radius: 5px; */
 }
+#dropdownMenu2{
+  color: #cbd5db;
+}
+.btn:hover{
+  color:#ffffff
+}
+
 #resetbtn{
-  margin-left: 10px;
+  margin-top: 20px;
+  width: 195px;
 }
 
 .food_image{
@@ -156,7 +188,16 @@ a.article-title:hover {
 #certified{
   margin-left: 5px;
 }
+.nav-link{
+  /* text-decoration: none; */
 
+  color:#2F343F ;
+
+}
+
+/* .jumbotron{
+  background-color: #ddd;
+} */
 .verified{
   height: 15px;
   width: 15px;
@@ -179,22 +220,46 @@ a.article-title:hover {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+
 }
 
-.dropdown-content a {
-  color: black;
+.dropdown-menu a {
+  color: white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  border-bottom: solid white;
+
+  border-width: thin;
 }
 
-.dropdown-content a:hover {
-  background-color: #ddd;
+.dropdown-menu a:hover {
+  color: #ddd;
+  background-color: #2F343F;
+}
+.dropdown-menu{
+  background-color: #2F343F;
+  margin:0;
+  padding:0;
+}
+.dropdown-item{
+  color: white;
+  background-color: #2F343F;
+  /* border-style: solid; */
 }
 
-.navbar-nav:hover .dropdown-content {
-  display: block;
+#new-recipe{
+
+  margin: 10px 10px 10px 0;
 }
+.sort{
+  float: right;
+  margin-top: 20px;
+
+}
+.step-links{
+  margin:auto;
+
 
 /* #dropdownMenuButton{
   background-color: black;
@@ -203,3 +268,23 @@ a.article-title:hover {
   border: none;
   outline: none;
 } */
+}
+
+.recipeimage{
+  width: 350px;
+  height:300px;
+  padding:5px;
+  margin-right: 10px
+}
+
+.recipeview-title{
+  font-size: 3rem;
+  color: #444444;
+}
+.recipeview-title:hover{
+  text-decoration: none;
+
+}
+.recipe_description{
+  white-space: pre-line;
+}

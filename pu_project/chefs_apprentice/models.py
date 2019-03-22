@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
+from django.urls import reverse
 
 
 # Create your models here.
@@ -43,6 +44,14 @@ class Recipe(models.Model):
                                on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
     image = models.ImageField(default='default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
+    download = models.ManyToManyField(User,related_name="downloads",blank=True)
+
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('view_recipe', kwargs={'recipetitle':self.title, 'pk': self.pk})
+
+class User(models.Model):
+    username = models.CharField(max_length = 100)

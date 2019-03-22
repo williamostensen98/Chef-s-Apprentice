@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import RecipeCreateView, RecipeUpdateView, RecipeDeleteView 
 
 urlpatterns = [
     path('', views.home, name='chef-home'),
@@ -9,7 +10,10 @@ urlpatterns = [
     path('<str:recipetitle>/<pk>', views.view_recipe, name="view_recipe"),
     path('downloadedrecipes/', views.downloadedrecipes, name= "downloadedrecipes"),
     path('favoriterecipes/', views.favoriterecipes, name= "favoriterecipes"),
-    path('myrecipes/', views.myrecipes, name= "myrecipes")
+    path('myrecipes/', views.myrecipes, name= "myrecipes"),
+    path('new/', RecipeCreateView.as_view(), name='recipe-create'),
+    path('<str:recipetitle>/<pk>/update/', RecipeUpdateView.as_view(), name="recipe-update"),
+    path('<str:recipetitle>/<pk>/delete/', RecipeDeleteView.as_view(), name="recipe-delete")
 ]
 
 if settings.DEBUG:
