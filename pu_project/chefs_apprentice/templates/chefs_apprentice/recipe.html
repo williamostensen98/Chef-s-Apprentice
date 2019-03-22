@@ -1,20 +1,28 @@
 {% extends "chefs_apprentice/base.html" %}
-{% block content%}
-      <article class="media content-section">
+{% block content %}
+    <article class="media content-section">
         <div class="media-body">
-          <div class="article-metadata">
-            <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
-            <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
-          </div>
-          <!-- <div class="content"> -->
+            <div class="article-metadata">
+                <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
+                <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <!-- <div class="content"> -->
             <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
-            {%for ingredient in recipe.ingredients.all%}
-              <p>{{ingredient}}</p>
-            {%endfor%}
+            {% for ingredient in ingredients %}
+                <p>
+                    {% if ingredient.measurement %}
+                        {{ ingredient.measurement }}
+                    {% endif %}
+                    {% if ingredient.unit %}
+                        {{ ingredient.unit }}
+                    {% endif %}
+                    {{ ingredient.ingredient }}
+                </p>
+            {% endfor %}
             <p class="article-content">{{ recipe.description }}</p>
-          <!-- </div> -->
+            <!-- </div> -->
         </div>
-      </article>
+    </article>
 
 {% endblock content %}

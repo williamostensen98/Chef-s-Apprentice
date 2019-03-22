@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Recipe
+from .models import Recipe, ChosenIngredient
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.generic import ListView
@@ -9,9 +9,6 @@ from django.core.paginator import Paginator
 @login_required
 def home(request):
     queryset = Recipe.objects.all()  # .order_by("-date_posted")
-    recipe = queryset[0]
-    i = recipe.ingredients.all()
-    # print(i)
     if request.GET.get("sortBy") == 'date':
         queryset = Recipe.objects.all().order_by("-date_posted")
         context = {
@@ -62,12 +59,15 @@ def getRecipies(queryset, ingredients):
     for recipe in queryset:
         count[recipe] = 0
         recipe_ingr = []
+        for i in ChosenIngredient.objects.filter(recipe__title=recipe.title):
+            recipe_ingr.append(i.ingredient)
         print(recipe_ingr)
         print(recipe)
         for i in recipe_ingr:
             for j in ingredients:
                 if i.name == j:
                     count[recipe] += 1
+        print(count[recipe])
         if count[recipe] == 0:
             del count[recipe]
             print(recipe.title + ' deleted')
@@ -119,9 +119,12 @@ def about(request):
 
 def view_recipe(request, pk, recipetitle):
     recipe = get_object_or_404(Recipe, pk=pk)
+    ingredients = ChosenIngredient.objects.filter(recipe__title=recipe.title)
     context = {
         "recipe": recipe,
+        "ingredients": ingredients,
     }
+
     return render(request, 'chefs_apprentice/recipe.html', context)
 
 
