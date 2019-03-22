@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 from django.urls import reverse
 
 
@@ -12,13 +13,36 @@ class Ingredient(models.Model):
         return self.name
 
 
+class ChosenIngredient(models.Model):
+    recipe = models.ForeignKey('Recipe', related_name='+', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    measurement = models.DecimalField(blank=True, null=True, decimal_places=2, max_digits=5,
+                                      validators=[MinValueValidator(0.00)])
+    unit_choices = (
+        ("liter", "liter"),
+        ("dl", "dl"),
+        ("kg", "kg"),
+        ("gram", "gram"),
+        ("ss", "ss"),
+        ("ts", "ts"),
+        ("klype", "klype"),
+        ("dråpe", "dråpe"),
+        ("boks", "boks"),
+        ("pakke", "pakke"),
+        ("pose", "pose"),
+    )
+    unit = models.CharField(choices=unit_choices, max_length=15, blank=True)
+
+
 class Recipe(models.Model):
-    title = models.CharField(max_length=100) #tenkt samme som tilhørende post
-    ingredients = models.ManyToManyField(Ingredient, blank=False) #liste av ingrediensobjekter
-    description = models.TextField() #tenkt sammen med content i post
-    date_posted = models.DateTimeField(default=timezone.now)  # DateTimeField(auto_now=True) ville satt datoen til akkurat nå
-    author = models.ForeignKey(User, on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
-    image = models.ImageField(default='food_pics/default.jpg', upload_to='food_pics')
+    title = models.CharField(max_length=100)  # tenkt samme som tilhørende post
+    ingredients = models.ManyToManyField(ChosenIngredient, blank=True, related_name='+')  # liste av ingrediensobjekter
+    description = models.TextField()  # tenkt sammen med content i post
+    date_posted = models.DateTimeField(
+        default=timezone.now)  # DateTimeField(auto_now=True) ville satt datoen til akkurat nå
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
+    image = models.ImageField(default='default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
     download = models.ManyToManyField(User,related_name="downloads",blank=True)
 
@@ -28,6 +52,6 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('view_recipe', kwargs={'recipetitle':self.title, 'pk': self.pk})
-        
+
 class User(models.Model):
     username = models.CharField(max_length = 100)
