@@ -29,9 +29,17 @@
             <div class="row">
               <div class="col">
                 <h4> Ingredienser</h4>
-                {%for ingredient in recipe.ingredients.all%}
-                  <p>{{ingredient}}</p>
-                {%endfor%}
+                {% for ingredient in ingredients %}
+                <p>
+                    {% if ingredient.measurement %}
+                        {{ ingredient.measurement }}
+                    {% endif %}
+                    {% if ingredient.unit %}
+                        {{ ingredient.unit }}
+                    {% endif %}
+                    {{ ingredient.ingredient }}
+                </p>
+            {% endfor %}
               </div>
                 <div class="col">
                   <img class="recipeimage" src="{{ recipe.image.url }}" alt="#">
@@ -55,6 +63,7 @@
             <h4>Slik gjør du</h4>
             <p class="article-content">{{ recipe.description }}</p>
         </div>-->
+        </div>
       </article>
 
 {% endblock content %}
