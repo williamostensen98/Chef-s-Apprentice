@@ -5,6 +5,16 @@ from django.db.models import Q
 from django.views.generic import ListView
 from django.core.paginator import Paginator
 
+from django.http import HttpResponse
+from django.views.generic import View
+
+#importing get_template from loader
+from django.template.loader import get_template
+
+#import render_to_pdf from util.py
+from .utils import render_to_pdf
+
+
 
 @login_required
 def home(request):
@@ -89,25 +99,14 @@ def myrecipes(request):
 #     template_name = 'chefs_apprentice/home.html'
 #     context_object_name = 'recipies'
 #
-def downloadrecipe(request, id=0):
-    recipe=get_object_or_404(recipe, pk=id)
-    if id!=0 and request.user.is_authenticated:
-        if not recipe.download.filter(id=request.user.id).exists():
-            recipe.download.add(request.user.id)
-        else:
-            recipe.download.remove(request.user.id)
-    return HttpResponseRedirect("/recipe" + id)
 
 
-def download_list(request):
-    user=request.user
-    queryset = user.download.all().order_by("-pk")
-    #paginator = Paginator(queryset, 10)
-    #page = request.GET.get('page')
-    #recipe = paginator.get_page(page)
-    #isExecEd = isExecutiveEditor(request.user)
-    context ={
-    'maintitle': 'Downloaded recipes',
-    'recipes' : queryset
-    }
-    return render(request, 'chefs_apprentice/downloadedrecipes.html', context)
+#Creating our view, it is a class based view
+class GeneratePdf(View):
+     def get(self, request, *args, **kwargs):
+
+        #getting the template
+        pdf = render_to_pdf('chefs_apprentice/recipe.html')
+
+         #rendering the template
+        return HttpResponse(pdf, content_type='application/pdf')
