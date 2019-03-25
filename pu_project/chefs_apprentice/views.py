@@ -103,10 +103,13 @@ def myrecipes(request):
 
 #Creating our view, it is a class based view
 class GeneratePdf(View):
-     def get(self, request, *args, **kwargs):
-
+     def get(self, request,pk, recipetitle, *args, **kwargs):
+        recipe=get_object_or_404(Recipe, pk=pk)
+        context = {
+            "recipe":recipe
+         }
         #getting the template
-        pdf = render_to_pdf('chefs_apprentice/recipe.html')
+        pdf = render_to_pdf('chefs_apprentice/recipe.html', context)
 
          #rendering the template
         return HttpResponse(pdf, content_type='application/pdf')

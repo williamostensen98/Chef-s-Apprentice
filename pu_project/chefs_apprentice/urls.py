@@ -11,7 +11,7 @@ urlpatterns = [
     path('downloadedrecipes/', views.downloadedrecipes, name= "downloadedrecipes"),
     path('favoriterecipes/', views.favoriterecipes, name= "favoriterecipes"),
     path('myrecipes/', views.myrecipes, name= "myrecipes"),
-    path('pdf/', GeneratePdf.as_view()),
+    path('<str:recipetitle>/<pk>/pdf/', GeneratePdf.as_view()),
 ]
 
 if settings.DEBUG:

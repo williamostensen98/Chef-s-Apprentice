@@ -6,7 +6,8 @@ from django.template.loader import get_template
 
 #pisa is a html2pdf converter using the ReportLab Toolkit,
 #the HTML5lib and pyPdf.
-
+from django.conf import settings
+import os
 from xhtml2pdf import pisa
 #difine render_to_pdf() function
 
@@ -16,7 +17,11 @@ def render_to_pdf(template_src, context_dict={}):
      result = BytesIO()
 
      #This part will create the pdf.
-     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), dest=result, link_callback=fetch_resources )
      if not pdf.err:
          return HttpResponse(result.getvalue(), content_type='application/pdf')
      return None
+
+def fetch_resources(uri, rel):
+  path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+  return path
