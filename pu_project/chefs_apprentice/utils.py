@@ -10,6 +10,8 @@ from django.template.loader import get_template
 
 #pisa is a html2pdf converter using the ReportLab Toolkit,
 #the HTML5lib and pyPdf.
+from django.conf import settings
+import os
 
 from xhtml2pdf import pisa
 #difine render_to_pdf() function

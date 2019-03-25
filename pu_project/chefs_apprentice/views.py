@@ -166,12 +166,13 @@ def myrecipes(request):
 
 
 class GeneratePdf(View):
-
-    def get(self, request, pk, recipetitle, *args, **kwargs):
-        recipe = get_object_or_404(Recipe, pk=pk)
+     def get(self, request,pk, recipetitle, *args, **kwargs):
+        recipe=get_object_or_404(Recipe, pk=pk)
         context = {
-            "recipe": recipe,
-        }
-        pdf = render_to_pdf("chefs_apprentice/recipe.html", context)
+            "recipe":recipe
+         }
+        #getting the template
+        pdf = render_to_pdf('chefs_apprentice/recipe.html', context)
 
-        return HttpResponse(pdf, content_type="application/pdf")
+         #rendering the template
+        return HttpResponse(pdf, content_type='application/pdf')
