@@ -6,8 +6,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 
-
-
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -21,9 +19,11 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
+
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+
 
 def change_password(request):
     if request.method == 'POST':
