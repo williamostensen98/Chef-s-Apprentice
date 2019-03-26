@@ -85,13 +85,18 @@
 
                 </form>
                 <body>
-                  <textarea id= "textboxfield" name="ingredientsBox"rows="2" cols="40", readonly="readonly">
+                  <textfield id= "textboxfield" name="ingredientsBox"rows="2" cols="40", readonly="readonly">
+
                     {% if current_ingredients %}
                       {% for i in current_ingredients %}
+                      <div class="round-text">
                             {{ i }}
+                    </div>
                       {% endfor %}
                     {% endif %}
-                  </textarea>
+
+
+                  </textfield>
                 </body>
                 <form id="search_ingredient" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
                    <button type='submit' name="search_ingredient" value ='Search'class="btn">Search</button>

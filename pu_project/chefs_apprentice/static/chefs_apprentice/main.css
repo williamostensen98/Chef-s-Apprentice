@@ -203,3 +203,13 @@ a.article-title:hover {
   border: none;
   outline: none;
 } */
+.round-text{
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: #ddd;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+
+  width: 10ch;
+  /* float:left; */
+}
