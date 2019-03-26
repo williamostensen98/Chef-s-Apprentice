@@ -3,9 +3,12 @@ from .models import Recipe, ChosenIngredient
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, View
 from django.core.paginator import Paginator
 
+from django.http import HttpResponse
+from django.template.loader import get_template
+from .utils import render_to_pdf
 
 @login_required
 def home(request):
@@ -170,6 +173,7 @@ def myrecipes(request):
 
         return render(request, 'chefs_apprentice/myrecipes.html', context)
 
+<<<<<<< HEAD
 # class RecipeListView(ListView):
 #     model = Recipe
 #     template_name = 'chefs_apprentice/home.html'
@@ -197,3 +201,17 @@ def download_list(request):
     'recipes' : queryset
     }
     return render(request, 'chefs_apprentice/downloadedrecipes.html', context)
+=======
+
+class GeneratePdf(View):
+     def get(self, request,pk, recipetitle, *args, **kwargs):
+        recipe=get_object_or_404(Recipe, pk=pk)
+        context = {
+            "recipe":recipe
+         }
+        #getting the template
+        pdf = render_to_pdf('chefs_apprentice/recipe.html', context)
+
+         #rendering the template
+        return HttpResponse(pdf, content_type='application/pdf')
+>>>>>>> pagination

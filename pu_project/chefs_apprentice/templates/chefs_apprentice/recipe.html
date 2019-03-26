@@ -1,6 +1,14 @@
 {% extends "chefs_apprentice/base.html" %}
+<<<<<<< HEAD
 {% block content %}
     <article class="media content-section">
+=======
+
+
+{% block content%}
+
+      <article class="media content-section">
+>>>>>>> pagination
         <div class="media-body">
           <div class="article-metadata">
             <small>Posted by: <a class="mr-2" href="profile">{{ recipe.author }}</a></small>
@@ -8,10 +16,8 @@
             {% if recipe.author == user or user.is_staff %}
               <a  class="btn btn-secondary btn-sm mt-1 mb-2 " href="{% url 'recipe-update' recipe.title recipe.id %}">Update</a>
               <a  class="btn btn-danger btn-sm  mt-1 mb-2 " href="{% url 'recipe-delete' recipe.title recipe.id %}">Delete</a>
-
-
-
             {% endif %}
+              <a class="btn btn-secondary btn-sm mt-1 mb-2" href="{% url 'recipe-pdf' recipe.title recipe.id %}">Download</a>
           </div>
           <!-- <div class="content"> -->
             <h2><a class="recipeview-title" href="#">{{ recipe.title }}</a></h2>
@@ -25,6 +31,7 @@
               </a>
             </div>
             <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
+<<<<<<< HEAD
           <div class="container">
             <div class="row">
               <div class="col">
@@ -64,6 +71,25 @@
             <p class="article-content">{{ recipe.description }}</p>
         </div>-->
         </div>
+=======
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <h4> Ingredienser</h4>
+                  {%for ingredient in recipe.ingredients.all%}
+                    <p>{{ingredient}}</p>
+                  {%endfor%}
+                </div>
+                  <div class="col">
+                    <img class="recipe_image" src="{{ recipe.image.url }}" alt="#">
+                  </div>
+
+              </div>
+              <h4>Slik gjør du</h4>
+              <p class= "recipe_description">{{ recipe.description }}</p>
+            </div>
+
+>>>>>>> pagination
       </article>
 
 {% endblock content %}
