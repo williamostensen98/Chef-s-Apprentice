@@ -1,5 +1,8 @@
 {% extends "chefs_apprentice/base.html" %}
+
+
 {% block content%}
+
       <article class="media content-section">
         <div class="media-body">
           <div class="article-metadata">
@@ -8,10 +11,8 @@
             {% if recipe.author == user %}
               <a  class="btn btn-secondary btn-sm mt-1 mb-2 " href="{% url 'recipe-update' recipe.title recipe.id %}">Update</a>
               <a  class="btn btn-danger btn-sm  mt-1 mb-2 " href="{% url 'recipe-delete' recipe.title recipe.id %}">Delete</a>
-
-
-
             {% endif %}
+              <a class="btn btn-secondary btn-sm mt-1 mb-2" href="{% url 'recipe-pdf' recipe.title recipe.id %}">Download</a>
           </div>
           <!-- <div class="content"> -->
             <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>

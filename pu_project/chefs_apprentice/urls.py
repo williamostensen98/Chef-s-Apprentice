@@ -14,7 +14,7 @@ urlpatterns = [
     path('new/', RecipeCreateView.as_view(), name='recipe-create'),
     path('<str:recipetitle>/<pk>/update/', RecipeUpdateView.as_view(), name="recipe-update"),
     path('<str:recipetitle>/<pk>/delete/', RecipeDeleteView.as_view(), name="recipe-delete"),
-    path('<str:recipetitle>/<pk>/pdf/', GeneratePdf.as_view())
+    path('<str:recipetitle>/<pk>/pdf/', GeneratePdf.as_view(), name="recipe-pdf")
 ]
 
 if settings.DEBUG:
