@@ -10,17 +10,17 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from .utils import render_to_pdf
 
+
 @login_required
 def home(request):
     queryset = Recipe.objects.all().order_by("-date_posted")
     recipe = queryset[0]
 
     # i = recipe.ingredients.all()
-   #print(i)
-
+    # print(i)
 
     if request.GET.get("sortBy"):
-        queryset =  Recipe.objects.all().order_by("-date_posted")
+        queryset = Recipe.objects.all().order_by("-date_posted")
         context = {
             'recipies': queryset
         }
@@ -51,7 +51,7 @@ def home(request):
     if not query_i and not query:
         queryset = start_list
 
-    paginator = Paginator(queryset, 3) # Show 25 contacts per page
+    paginator = Paginator(queryset, 3)  # Show 25 contacts per page
 
     page = request.GET.get('page')
     queryset = paginator.get_page(page)
@@ -99,19 +99,21 @@ def getRecipies(queryset, ingredients):
         top.insert(temp, sorted_count[i][0])
     return top
 
+
 # Oppretting av oppskrift og validering av dette
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title','ingredients','image', 'description']
+    fields = ['title', 'ingredients', 'image', 'description']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
-    fields = ['title','ingredients','image', 'description']
+    fields = ['title', 'ingredients', 'image', 'description']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -122,6 +124,7 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == recipe.author or self.request.user.is_staff:
             return True
         return False
+
 
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Recipe
@@ -157,31 +160,32 @@ def downloadedrecipes(request):
 def favoriterecipes(request):
     return render(request, 'chefs_apprentice/favoriterecipes.html', {'title': 'favoriterecipes'})
 
+
 # View for egne lagde oppskrifter i my account menyen
 
 def myrecipes(request):
-        queryset = Recipe.objects.all().order_by("-date_posted") # sorter etter sist opprettet
-        paginator = Paginator(queryset, 3) # Show 3 contacts per page
+    queryset = Recipe.objects.all().order_by("-date_posted")  # sorter etter sist opprettet
+    paginator = Paginator(queryset, 3)  # Show 3 contacts per page
 
-        page = request.GET.get('page') # pagination hvis det er flere sider
-        queryset = paginator.get_page(page)
-        context = {
-           #'posts': queryset,
-            'recipies': queryset
+    page = request.GET.get('page')  # pagination hvis det er flere sider
+    queryset = paginator.get_page(page)
+    context = {
+        # 'posts': queryset,
+        'recipies': queryset
 
-        }
+    }
 
-        return render(request, 'chefs_apprentice/myrecipes.html', context)
+    return render(request, 'chefs_apprentice/myrecipes.html', context)
 
 
 class GeneratePdf(View):
-     def get(self, request,pk, recipetitle, *args, **kwargs):
-        recipe=get_object_or_404(Recipe, pk=pk)
+    def get(self, request, pk, recipetitle, *args, **kwargs):
+        recipe = get_object_or_404(Recipe, pk=pk)
         context = {
-            "recipe":recipe
-         }
-        #getting the template
+            "recipe": recipe
+        }
+        # getting the template
         pdf = render_to_pdf('chefs_apprentice/recipe.html', context)
 
-         #rendering the template
+        # rendering the template
         return HttpResponse(pdf, content_type='application/pdf')
