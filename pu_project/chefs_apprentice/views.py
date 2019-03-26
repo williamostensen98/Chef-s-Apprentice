@@ -173,35 +173,6 @@ def myrecipes(request):
 
         return render(request, 'chefs_apprentice/myrecipes.html', context)
 
-<<<<<<< HEAD
-# class RecipeListView(ListView):
-#     model = Recipe
-#     template_name = 'chefs_apprentice/home.html'
-#     context_object_name = 'recipies'
-#
-def downloadrecipe(request, id=0):
-    recipe=get_object_or_404(recipe, pk=id)
-    if id!=0 and request.user.is_authenticated:
-        if not recipe.download.filter(id=request.user.id).exists():
-            recipe.download.add(request.user.id)
-        else:
-            recipe.download.remove(request.user.id)
-    return HttpResponseRedirect("/recipe" + id)
-
-
-def download_list(request):
-    user=request.user
-    queryset = user.download.all().order_by("-pk")
-    #paginator = Paginator(queryset, 10)
-    #page = request.GET.get('page')
-    #recipe = paginator.get_page(page)
-    #isExecEd = isExecutiveEditor(request.user)
-    context ={
-    'maintitle': 'Downloaded recipes',
-    'recipes' : queryset
-    }
-    return render(request, 'chefs_apprentice/downloadedrecipes.html', context)
-=======
 
 class GeneratePdf(View):
      def get(self, request,pk, recipetitle, *args, **kwargs):
@@ -214,4 +185,3 @@ class GeneratePdf(View):
 
          #rendering the template
         return HttpResponse(pdf, content_type='application/pdf')
->>>>>>> pagination
