@@ -16,8 +16,7 @@ class Ingredient(models.Model):
 class ChosenIngredient(models.Model):
     recipe = models.ForeignKey('Recipe', related_name='+', on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    measurement = models.DecimalField(blank=True, null=True, decimal_places=2, max_digits=5,
-                                      validators=[MinValueValidator(0.00)])
+    measurement = models.IntegerField(blank=True, null=True, )
     unit_choices = (
         ("liter", "liter"),
         ("dl", "dl"),
@@ -25,13 +24,22 @@ class ChosenIngredient(models.Model):
         ("gram", "gram"),
         ("ss", "ss"),
         ("ts", "ts"),
-        ("klype", "klype"),
-        ("dråpe", "dråpe"),
-        ("boks", "boks"),
-        ("pakke", "pakke"),
-        ("pose", "pose"),
+        ("klyper", "klyper"),
+        ("dråper", "dråper"),
+        ("bokser", "bokser"),
+        ("pakker", "pakker"),
+        ("poser", "poser"),
     )
     unit = models.CharField(choices=unit_choices, max_length=15, blank=True)
+
+    def __str__(self):
+        string = ""
+        if self.measurement:
+            string = string + str(self.measurement) + " "
+        if self.unit:
+            string = string + self.unit + " "
+        string = string + self.ingredient.name
+        return string
 
 
 class Recipe(models.Model):
@@ -45,17 +53,17 @@ class Recipe(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
     NIVA = (
-        ('E','Enkel'),
-        ('M','Middels'),
-        ('V','Vanskelig'),
+        ('E', 'Enkel'),
+        ('M', 'Middels'),
+        ('V', 'Vanskelig'),
     )
     TID = (
-        ('L','Under 30 min'),
+        ('L', 'Under 30 min'),
         ('M', 'Ca. 30-60 min'),
         ('S', 'Over 1 time'),
     )
     tid = models.CharField(default='L', max_length=1, choices=TID)
-    niva = models.CharField(default='E',max_length=1, choices=NIVA)
+    niva = models.CharField(default='E', max_length=1, choices=NIVA)
 
     def __str__(self):
         return self.title
