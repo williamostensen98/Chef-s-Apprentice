@@ -118,7 +118,7 @@ def getRecipies(queryset, ingredients):
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title','ingredients','image', 'description','niva','tid' ]
+    fields = ['title','ingredients','image','visible', 'description','niva','tid' ]
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -127,7 +127,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
-    fields = ['title','ingredients','image', 'description', 'niva','tid']
+    fields = ['title','ingredients','image', 'description','visible', 'niva','tid']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -138,6 +138,7 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == recipe.author or self.request.user.is_staff:
             return True
         return False
+
 
 
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
