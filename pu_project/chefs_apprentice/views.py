@@ -119,15 +119,19 @@ def getRecipies(queryset, ingredients):
 # Oppretting av oppskrift og validering av dette
 
 def add_recipe(request):
-    IngredientFormSet = inlineformset_factory(Recipe, ChosenIngredient, fields=['ingredient', 'measurement', 'unit'], extra=3)
+    IngredientFormSet = inlineformset_factory(Recipe, ChosenIngredient, fields=['ingredient', 'measurement', 'unit'], extra=5)
     if request.method == "POST":
         recipe_form = RecipeForm(request.POST, prefix='recipe')
         ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient')
         if recipe_form.is_valid() and ingredient_formset.is_valid():
-            recipe = recipe_form.save()
+            recipe = recipe_form.save(False)
+            recipe.author = request.user
+            recipe.save()
             ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient', instance=recipe)
             ingredient_formset.is_valid()
             ingredient_formset.save()
+            recipe_form = RecipeForm(prefix='recipe')
+            ingredient_formset = IngredientFormSet(prefix='ingredient')
             return render(request, 'chefs_apprentice/recipe_form.html', {
                 'recipe_form': recipe_form,
                 'ingredient_formset': ingredient_formset, })
