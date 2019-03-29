@@ -10,6 +10,8 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from .utils import render_to_pdf
 
+class curr_i:
+    current_ingredients = set([])
 
 @login_required
 def home(request):
@@ -42,23 +44,35 @@ def home(request):
         )
 
     query_i = request.GET.get("q_i")
-    if query_i:
+    if request.GET.get("addIngredient"):
         input = query_i.split(',')
         ingredients = [x.strip() for x in input]
         ingredients = list(set(ingredients))
-        queryset = getRecipies(queryset, ingredients)
+        #queryset = getRecipies(queryset, ingredients)
+        print(curr_i.current_ingredients)
+        curr_i.current_ingredients.update(ingredients)
 
-    if not query_i and not query:
+    if request.GET.get("search_ingredient"):
+        queryset = getRecipies(queryset, curr_i.current_ingredients)
+
+
+    if not request.GET.get("search_ingredient") and not query:
         queryset = start_list
+    #if not query_i and not query:
+    #    queryset = start_list
 
-    paginator = Paginator(queryset, 3)  # Show 25 contacts per page
+    if request.GET.get("reset"):
+        curr_i.current_ingredients = set([])
+
+
+    paginator = Paginator(queryset, 5) # Show 5 contacts per page
 
     page = request.GET.get('page')
     queryset = paginator.get_page(page)
     context = {
-        # 'posts': queryset,
-        'recipies': queryset
-
+       #'posts': queryset,
+        'recipies': queryset,
+        'current_ingredients': curr_i.current_ingredients
     }
     return render(request, 'chefs_apprentice/home.html', context)
 
@@ -104,7 +118,7 @@ def getRecipies(queryset, ingredients):
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'ingredients', 'image', 'description']
+    fields = ['title','ingredients','image', 'description','niva','tid' ]
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -113,7 +127,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
-    fields = ['title', 'ingredients', 'image', 'description']
+    fields = ['title','ingredients','image', 'description', 'niva','tid']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

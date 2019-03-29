@@ -48,8 +48,8 @@
             <div class="col-sm pt-5">
                 <h2><a class="article-title" href="{%url 'view_recipe' recipetitle=recipe.title pk=recipe.pk%}">{{ recipe.title }}</a></h2>
                 <!-- <small class="article-content">{{ recipe.description }}</small> -->
-                <small class="article-content text-muted"><img class="verified" src="static/chefs_apprentice/spatula.png" alt="#">Enkel</small>
-                <small class="article-content text-muted"><img class="verified" src="static/chefs_apprentice/time.png" alt="#">Under 30 min</small>
+                <small class="article-content text-muted"><img class="verified" src="static/chefs_apprentice/spatula.png" alt="#">{{ recipe.get_niva_display }}</small>
+                <small class="article-content text-muted"><img class="verified" src="static/chefs_apprentice/time.png" alt="#">{{ recipe.get_tid_display }}</small>
             </div>
 
             <div class="col-sm">
