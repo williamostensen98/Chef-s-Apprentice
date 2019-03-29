@@ -5,8 +5,9 @@
     <form method="POST">
       {%  csrf_token %}
       <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Recipe</legend>
-        {{ form|crispy }}
+          <legend class="border-bottom mb-4">Recipe</legend>
+          {{ recipe_form|crispy }}
+          {{ ingredient_formset }}
       </fieldset>
       <div class="form-group">
         {% if request.path == '/new/' %}
