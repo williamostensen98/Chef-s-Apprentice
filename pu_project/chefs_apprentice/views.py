@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DeleteView, View
 from django.core.paginator import Paginator
 from django.forms import inlineformset_factory
+from .forms import RecipeForm
 
 from django.http import HttpResponse
 from django.template.loader import get_template
