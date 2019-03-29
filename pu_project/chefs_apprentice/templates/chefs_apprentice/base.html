@@ -14,6 +14,7 @@
   </head>
   <body>
 
+<!-- '{% if request.path != '/recipe.title/recipe.id/pdf' %}' -->
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
@@ -51,12 +52,14 @@
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
               {% endif %}
+
             </div>
           </div>
         </div>
       </nav>
     </header>
-  
+    <!-- {% endif %} -->
+
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
@@ -87,14 +90,53 @@
                   <button class="btn btn-rounded btn-sm my-0" type="submit">Search</button>
                 </form> -->
 
-                <form id="searchfield_i" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
+                <!-- <form id="searchfield_i" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
                   <input id="ingredientsField" class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Search ingredients' aria-label="Search" value='{{ request.GET.q_i }}' />
                   <button class="btn btn-rounded btn-mr-sm-2" type="submit">Search</button>
-                  <!-- <input type='submit' value ='Search'class="button"/> -->
-                  <button id="resetbtn" class="btn btn-rounded btn-mr-sm-2" type='submit' onclick="ingredientsField.value='', titleField.value=''">Reset Search</button>
+                  <!<input type='submit' value ='Search'class="button"/> -->
+                  <!-- <button id="resetbtn" class="btn btn-rounded btn-mr-sm-2" type='submit' onclick="ingredientsField.value='', titleField.value='', textboxfield.value=''">Reset Search</button>
 
-              </form>
+              </form>  -->
+              <form id="searchfield_i" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
+                 <input id="ingredientsField" class="form-control mr-sm-2" type ='text' name = 'q_i' placeholder ='Add ingredients' aria-label="Search" value='{{ request.GET.q_i }}' />
+                 <button class="btn btn-rounded btn-mr-sm-2" type="submit" name = "addIngredient" value="Add" onclick=>Add</button>
+                 <!-- <input type='submit' value ='Search'class="button"/> -->
 
+
+               </form>
+
+               <div class="row">
+                 <div class="col">
+
+
+                 <textfield id= "textboxfield" name="ingredientsBox"rows="2" cols="40" readonly="readonly">
+
+                    {% if current_ingredients %}
+                      {% for i in current_ingredients %}
+
+                          <div class="round-text">
+                            <!-- <a href="#" class="close"></a> -->
+                              {{ i }}
+                          </div>
+                      {% endfor %}
+
+                    {% endif %}
+                </textfield>
+               </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-8">
+
+
+               <form id="search_ingredient" method='GET' action ='' class="form-inline md-form mr-auto mb-4">
+                 <button id="resetbtn" type='submit' name="search_ingredient" value ='Search' class="btn btn-rounded btn-mr-sm-2">Search Ingredients</button>
+                 <button id="resetbtn" name="reset" value ='Reset' class="btn btn-rounded btn-mr-sm-2" type='submit' onclick="ingredientsField.value='', titleField.value='', textboxfield.value=''">Reset Search</button>
+
+               </form>
+
+              </div>
+            </div>
               <!-- <h3>Tips</h3>
 
 
@@ -167,6 +209,7 @@
       </div>
     </main>
     {% endif %}
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

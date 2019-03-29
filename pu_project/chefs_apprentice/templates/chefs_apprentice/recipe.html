@@ -15,23 +15,44 @@
               <a class="btn btn-secondary btn-sm mt-1 mb-2" href="{% url 'recipe-pdf' recipe.title recipe.id %}">Download</a>
           </div>
           <!-- <div class="content"> -->
-            <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
-            <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
             <div class="container">
+
+              <div class="row">
+                <img class="recipe_image" src="{{ recipe.image.url }}" alt="#">
+              </div>
+
+
+              <h2 class="recipeview-title">{{ recipe.title }}</h2>
+            <!-- <img class="article-img" src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2016/howcuttingdo.jpg" height="100px" alt="#"> -->
+
+              <!-- <div class="row">
+                <div class="col">
+                  {{ recipe.get_niva_display }}
+                </div>
+                <div class="col">
+                  {{ recipe.get_tid_display }}
+                </div>
+
+              </div> -->
               <div class="row">
                 <div class="col">
-                  <h4> Ingredienser</h4>
+                  <h4 class="r-content"> Ingredienser <hr> </h4>
                   {%for ingredient in recipe.ingredients.all%}
-                    <p>{{ingredient}}</p>
+
+                      <p class="ingredients">{{ingredient}}<hr> </p>
+                    
                   {%endfor%}
                 </div>
-                  <div class="col">
+                  <!-- <div class="col">
                     <img class="recipe_image" src="{{ recipe.image.url }}" alt="#">
+                  </div> -->
+                  <div class="col">
+                    <h4 class="r-content">Slik gjør du</h4>
+                    <p class="recipe_description">{{ recipe.description }}</p>
                   </div>
 
               </div>
-              <h4>Slik gjør du</h4>
-              <p class= "recipe_description">{{ recipe.description }}</p>
+
             </div>
 
       </article>

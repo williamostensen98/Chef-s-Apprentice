@@ -20,6 +20,18 @@ class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # on_delete=models.CASCADE sier at hvis brukeren blir slettet vil postene også bli slettet
     image = models.ImageField(default='food_pics/default.jpg', upload_to='food_pics')
     visible = models.BooleanField(default=True)
+    NIVA = (
+        ('E','Enkel'),
+        ('M','Middels'),
+        ('V','Vanskelig'),
+    )
+    TID = (
+        ('L','Under 30 min'),
+        ('M', 'Ca. 30-60 min'),
+        ('S', 'Over 1 time'),
+    )
+    tid = models.CharField(default='L', max_length=1, choices=TID)
+    niva = models.CharField(default='E',max_length=1, choices=NIVA)
 
     def __str__(self):
         return self.title
