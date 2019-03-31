@@ -14,7 +14,7 @@ class ChosenIngredientInLine(admin.TabularInline):
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ("title", "visible", "author")
-    actions = ["make_visible", "make_hidden"]
+    actions = ["make_visible", "make_hidden", "delete_selected"]
     exclude = ('date_posted', 'ingredients')
     inlines = [
         ChosenIngredientInLine,
