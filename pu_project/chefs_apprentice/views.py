@@ -172,9 +172,6 @@ def edit_recipe(request, pk, recipetitle):
             recipe.visible = recipe_now.visible
             recipe.niva = recipe_now.niva
             recipe.tid = recipe_now.tid
-            #recipe_now = recipe_form.save(False)
-            #recipe_now.author = recipe.author
-            #recipe_now.save()
             ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient', instance=recipe)
             ingredient_formset.save()
             recipe_form = RecipeForm(prefix='recipe', instance=recipe)
@@ -189,7 +186,6 @@ def edit_recipe(request, pk, recipetitle):
     else:
         recipe = Recipe.objects.filter(pk=pk).get()
         recipe_form = RecipeForm(prefix='recipe', )
-        ingredients = ChosenIngredient.objects.filter(recipe__pk=recipe.pk)
         ingredient_formset = IngredientFormSet(prefix='ingredient', )
         return render(request, 'chefs_apprentice/recipe_form.html', {
             'recipe_form': recipe_form,
