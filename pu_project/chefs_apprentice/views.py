@@ -12,8 +12,10 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from .utils import render_to_pdf
 
+
 class curr_i:
     current_ingredients = set([])
+
 
 @login_required
 def home(request):
@@ -50,29 +52,27 @@ def home(request):
         input = query_i.split(',')
         ingredients = [x.strip() for x in input]
         ingredients = list(set(ingredients))
-        #queryset = getRecipies(queryset, ingredients)
+        # queryset = getRecipies(queryset, ingredients)
         print(curr_i.current_ingredients)
         curr_i.current_ingredients.update(ingredients)
 
     if request.GET.get("search_ingredient"):
         queryset = getRecipies(queryset, curr_i.current_ingredients)
 
-
     if not request.GET.get("search_ingredient") and not query:
         queryset = start_list
-    #if not query_i and not query:
+    # if not query_i and not query:
     #    queryset = start_list
 
     if request.GET.get("reset"):
         curr_i.current_ingredients = set([])
 
-
-    paginator = Paginator(queryset, 5) # Show 5 contacts per page
+    paginator = Paginator(queryset, 5)  # Show 5 contacts per page
 
     page = request.GET.get('page')
     queryset = paginator.get_page(page)
     context = {
-       #'posts': queryset,
+        # 'posts': queryset,
         'recipies': queryset,
         'current_ingredients': curr_i.current_ingredients
     }
@@ -119,7 +119,8 @@ def getRecipies(queryset, ingredients):
 # Oppretting av oppskrift og validering av dette
 
 def add_recipe(request):
-    IngredientFormSet = inlineformset_factory(Recipe, ChosenIngredient, fields=['ingredient', 'measurement', 'unit'], extra=5)
+    IngredientFormSet = inlineformset_factory(Recipe, ChosenIngredient, fields=['ingredient', 'measurement', 'unit'],
+                                              extra=5)
     if request.method == "POST":
         recipe_form = RecipeForm(request.POST, prefix='recipe')
         ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient')
@@ -128,7 +129,6 @@ def add_recipe(request):
             recipe.author = request.user
             recipe.save()
             ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient', instance=recipe)
-            ingredient_formset.is_valid()
             ingredient_formset.save()
             recipe_form = RecipeForm(prefix='recipe')
             ingredient_formset = IngredientFormSet(prefix='ingredient')
@@ -149,9 +149,56 @@ def add_recipe(request):
         })
 
 
+def edit_recipe(request, pk, recipetitle):
+    IngredientFormSet = inlineformset_factory(Recipe, ChosenIngredient, fields=['ingredient', 'measurement', 'unit'],
+                                              extra=5)
+    if request.method == "GET":
+        recipe = Recipe.objects.filter(pk=pk).get()
+        recipe_form = RecipeForm(prefix='recipe', instance=recipe)
+        ingredient_formset = IngredientFormSet(prefix='ingredient', instance=recipe)
+        return render(request, 'chefs_apprentice/recipe_form.html', {
+                'recipe_form': recipe_form,
+                'ingredient_formset': ingredient_formset, })
+    elif request.method == "POST":
+        recipe = Recipe.objects.filter(pk=pk).get()
+        recipe_form = RecipeForm(request.POST, prefix='recipe')
+        ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient', instance=recipe)
+        if recipe_form.is_valid() and ingredient_formset.is_valid() and (
+                request.user == recipe.author or request.user.is_staff):
+            recipe_now = recipe_form.save(False)
+            recipe.title = recipe_now.title
+            recipe.description = recipe_now.description
+            recipe.image = recipe_now.image
+            recipe.visible = recipe_now.visible
+            recipe.niva = recipe_now.niva
+            recipe.tid = recipe_now.tid
+            #recipe_now = recipe_form.save(False)
+            #recipe_now.author = recipe.author
+            #recipe_now.save()
+            ingredient_formset = IngredientFormSet(request.POST, request.FILES, prefix='ingredient', instance=recipe)
+            ingredient_formset.save()
+            recipe_form = RecipeForm(prefix='recipe', instance=recipe)
+            ingredient_formset = IngredientFormSet(prefix='ingredient', instance=recipe)
+            return render(request, 'chefs_apprentice/recipe_form.html', {
+                'recipe_form': recipe_form,
+                'ingredient_formset': ingredient_formset, })
+        else:
+            return render(request, 'chefs_apprentice/recipe_form.html', {
+                'recipe_form': recipe_form,
+                'ingredient_formset': ingredient_formset, })
+    else:
+        recipe = Recipe.objects.filter(pk=pk).get()
+        recipe_form = RecipeForm(prefix='recipe', )
+        ingredients = ChosenIngredient.objects.filter(recipe__pk=recipe.pk)
+        ingredient_formset = IngredientFormSet(prefix='ingredient', )
+        return render(request, 'chefs_apprentice/recipe_form.html', {
+            'recipe_form': recipe_form,
+            'ingredient_formset': ingredient_formset, })
+
+
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title','ingredients','image', 'description','niva','tid' ]
+    fields = ['title', 'ingredients', 'image', 'description', 'niva', 'tid']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -160,7 +207,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
-    fields = ['title','ingredients','image', 'description', 'niva','tid']
+    fields = ['title', 'ingredients', 'image', 'description', 'niva', 'tid']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -191,7 +238,7 @@ def about(request):
 
 def view_recipe(request, pk, recipetitle):
     recipe = get_object_or_404(Recipe, pk=pk)
-    ingredients = ChosenIngredient.objects.filter(recipe__title=recipe.title)
+    ingredients = ChosenIngredient.objects.filter(recipe__pk=recipe.pk)
     context = {
         "recipe": recipe,
         "ingredients": ingredients,

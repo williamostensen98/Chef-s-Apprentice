@@ -12,7 +12,7 @@ urlpatterns = [
     path('favoriterecipes/', views.favoriterecipes, name="favoriterecipes"),
     path('myrecipes/', views.myrecipes, name="myrecipes"),
     path('new/', views.add_recipe, name='recipe-create'),
-    path('<str:recipetitle>/<pk>/update/', RecipeUpdateView.as_view(), name="recipe-update"),
+    path('<str:recipetitle>/<pk>/update/', views.edit_recipe, name="recipe-update"),
     path('<str:recipetitle>/<pk>/delete/', RecipeDeleteView.as_view(), name="recipe-delete"),
     path('<str:recipetitle>/<pk>/pdf/', GeneratePdf.as_view(), name="recipe-pdf")
 ]
