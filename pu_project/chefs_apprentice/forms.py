@@ -1,8 +1,14 @@
+
+from .models import Recipe, ChosenIngredient
 from django.forms import ModelForm
-from .models import Recipe
+# from django.forms.models import inlineformset_factory
+
+
 
 
 class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'description', 'image']
+        fields = ['title', 'description','ingredients', 'image']
+
+# ChosenIngredientFormSet = inlineformset_factory(Recipe, ChosenIngredient)

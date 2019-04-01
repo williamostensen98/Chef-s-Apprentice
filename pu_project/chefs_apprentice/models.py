@@ -16,6 +16,7 @@ class Ingredient(models.Model):
 class ChosenIngredient(models.Model):
     recipe = models.ForeignKey('Recipe', related_name='+', on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    # ingredient = models.CharField(max_length=50)
     measurement = models.IntegerField(blank=True, null=True, )
     unit_choices = (
         ("liter", "liter"),
