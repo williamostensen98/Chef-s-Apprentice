@@ -184,7 +184,6 @@ def edit_recipe(request, pk, recipetitle):
                 'recipe_form': recipe_form,
                 'ingredient_formset': ingredient_formset, })
     else:
-        recipe = Recipe.objects.filter(pk=pk).get()
         recipe_form = RecipeForm(prefix='recipe', )
         ingredient_formset = IngredientFormSet(prefix='ingredient', )
         return render(request, 'chefs_apprentice/recipe_form.html', {
