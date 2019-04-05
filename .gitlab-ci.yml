@@ -47,4 +47,4 @@ test:
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
-  - python pu_project/settings.py test
+  - python /pu_project/settings.py test
