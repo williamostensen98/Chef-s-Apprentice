@@ -72,5 +72,3 @@ class Recipe(models.Model):
         return reverse('view_recipe', kwargs={'recipetitle': self.title, 'pk': self.pk})
 
 
-class User(models.Model):
-    username = models.CharField(max_length=100)

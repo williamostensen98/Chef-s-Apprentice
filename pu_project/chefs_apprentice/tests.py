@@ -30,3 +30,5 @@ class RecipeTest(TestCase):
         self.assertEqual("default.jpg", r.image.name)  # tester at r.image er default.jpg
         self.assertLessEqual(r.date_posted,
                              timezone.now())  # tester at tiden r ble laget er nå eller før(siden vi kan teste over et minuttskifte)
+        self.assertEqual("E", r.niva)  # tester at nivå er standard, E
+        self.assertEqual("L", r.tid)  # tsester at tid er standard, L
