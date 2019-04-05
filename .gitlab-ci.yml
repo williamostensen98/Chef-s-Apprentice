@@ -44,7 +44,7 @@ before_script:
 # and then adding `--settings app.settings.ci` (or similar) to the test command
 
 test:
-  --settings app.settings.py
+  -settings app.settings.py
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
