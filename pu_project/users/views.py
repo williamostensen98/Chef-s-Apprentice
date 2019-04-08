@@ -6,6 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 
+# View for registrering av bruker
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -24,7 +25,7 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
-
+# View for endring av passord 
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)

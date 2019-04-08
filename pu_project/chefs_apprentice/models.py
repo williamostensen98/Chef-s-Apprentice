@@ -6,13 +6,15 @@ from django.urls import reverse
 
 
 # Create your models here.
+# ingrediens modell i databasen - navn på ingrediens
+
 class Ingredient(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
-
+# Ingrediens objekt modell som peker til ingrediens og oppskrift og har med mengde og enhet på ingrediens
 class ChosenIngredient(models.Model):
     recipe = models.ForeignKey('Recipe', related_name='+', on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
@@ -42,7 +44,7 @@ class ChosenIngredient(models.Model):
         string = string + self.ingredient.name
         return string
 
-
+# Oppskrifts modell som peker til blant annet ChosenIngredient og tar vare på alle attributter som tilhører en oppskrift.
 class Recipe(models.Model):
     title = models.CharField(max_length=100)  # tenkt samme som tilhørende post
     ingredients = models.ManyToManyField(ChosenIngredient, blank=True, related_name='+')  # liste av ingrediensobjekter

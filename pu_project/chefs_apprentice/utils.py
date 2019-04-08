@@ -16,6 +16,8 @@ import os
 from xhtml2pdf import pisa
 #difine render_to_pdf() function
 
+# funksjon som tar inn hvilke template som skal rendres til pdf sammen med context dictionaryen for innholdet i denne
+# sender så en HttpResponse som rendrer innhold om til pdf basert på templaten.
 def render_to_pdf(template_src, context_dict={}):
      template = get_template(template_src)
      html  = template.render(context_dict)
@@ -26,6 +28,8 @@ def render_to_pdf(template_src, context_dict={}):
      if not pdf.err:
          return HttpResponse(result.getvalue(), content_type='application/pdf')
      return None
+
+# gjør det mulig å ta inn bilder i pdf-en
 
 def fetch_resources(uri, rel):
   path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))

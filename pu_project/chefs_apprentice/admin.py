@@ -23,6 +23,7 @@ class RecipeAdmin(admin.ModelAdmin):
     class Meta:
         model = Recipe
 
+    # funksjon for å sette make_visible og hidden som actions i admin siden
     def make_visible(self, request, queryset):
         queryset.update(visible=True)
         queryset.update(date_posted=timezone.now())

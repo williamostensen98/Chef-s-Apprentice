@@ -19,7 +19,7 @@
 
 
   {% for recipe in recipies %}
-    {% if request.user == recipe.author %}
+    {% if request.user == recipe.author %} <!-- Hvis brukeren innlogget er forfatteren av oppskriften så skal den vises i my recipes -->
 
       <article class="media recipe-section">
 
@@ -60,6 +60,7 @@
     {% endif %}
   {% endfor  %}
 
+<!--  Paginering - Hvis det er nok oppskrifter på siden så viser disse linjene en pagineringsbar med tall til hver side -->
   <div class="pagination">
     <span class="step-links">
         {% if recipies.has_previous %}

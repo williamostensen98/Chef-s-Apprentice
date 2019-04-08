@@ -4,7 +4,7 @@ from django.forms import ModelForm
 # from django.forms.models import inlineformset_factory
 
 
-
+# Skjema for oppretting av oppskrift, brukes i recipe-create
 
 class RecipeForm(ModelForm):
     class Meta:
