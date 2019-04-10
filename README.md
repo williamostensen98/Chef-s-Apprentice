@@ -21,4 +21,4 @@ $ git clone https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-64.g
 ```
 Videre burde det installeres et virtual environment i prosjektet slik at det kan kjøres. Sørg så for at alle tilleggspakker gitt i requirements.txt er installert. Deretter burde nå applikasjonen være klar for å kjøres.
 <h4>Tester</h4>
-Innebygd i prosjektet ligger en pipeline som kjører prosjektets testing hver gang prosjektet oppdateres. Status på denne kan ses på gitlab siden til prosjektet under CD/CI og pipelines. Ellers kan også testene kjøres via test.py direkte.
+Innebygd i prosjektet ligger en pipeline som kjører prosjektets testing hver gang prosjektet oppdateres, slik at det alltid er en fungerende versjon som ligger ute. Status på denne kan ses på gitlab siden til prosjektet under CD/CI og pipelines. Ellers kan også testene kjøres via test.py direkte.
