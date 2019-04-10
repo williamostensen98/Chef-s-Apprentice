@@ -13,7 +13,7 @@ Ved å trykke på 'New Recipe' kommer man til et enkelt skjema der det er muligh
 
 Under 'My Account' finner man informasjon om sin egen bruker og muligheten til å bytte passord. Her finner man også en oversikt over alle oppskrifter en selv har lagt ut på siden.
 <h2>Kjør applikasjonen</h2>
-Applikasjonen er bygd med python backend og django rammeverk rundt hele prosjektet.
+Applikasjonen er bygd med [python](https://www.python.org/) backend og [django](https://docs.djangoproject.com/en/2.2/) rammeverk rundt hele prosjektet.
 
 For å få kjørt applikasjonen vil det først være hensiktsmessig å klone prosjektet inn i sin foretrekkende IDE, som støtter python, f.eks. ved terminal:
 ```sh
