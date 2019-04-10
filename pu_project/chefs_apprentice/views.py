@@ -7,7 +7,6 @@ from django.views.generic import CreateView, UpdateView, DeleteView, View
 from django.core.paginator import Paginator
 from django.forms import inlineformset_factory
 from .forms import RecipeForm
-
 from django.http import HttpResponse
 from django.template.loader import get_template
 from .utils import render_to_pdf
@@ -20,16 +19,6 @@ class curr_i:
 def home(request):
     queryset = Recipe.objects.all().order_by("-date_posted") # sorterer visning av oppskrifter på hjemmesiden slik at de nyeste kommer øverst.
     recipe = queryset[0]
-
-    # i = recipe.ingredients.all()
-    # print(i)
-
-    # if request.GET.get("sortBy"):
-    #     queryset = Recipe.objects.all().order_by("-date_posted")
-    #     context = {
-    #         'recipies': queryset
-    #     }
-    #     return render(request, 'chefs_apprentice/home.html', context)
 
     # legger først til alle oppskrifter opprettet av sertifiserte kokker
     start_list = []
@@ -92,7 +81,9 @@ def home(request):
     }
     return render(request, 'chefs_apprentice/home.html', context)
 
-
+# henter ut oppskriftene med best match mellom queryset og ingredients
+#
+#
 def getRecipies(queryset, ingredients):
     count = {}
     print(ingredients)
@@ -174,68 +165,6 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-# class RecipeCreateView(CreateView):
-#     template_name = 'recipe_form.html'
-#     model = Recipe
-#     form_class = RecipeForm
-#     success_url = 'success/'
-#     fields = ['title','ingredients','image', 'description', 'niva','tid', 'visible']
-#
-#     def get(self, request, *args, **kwargs):
-#         """
-#         Handles GET requests and instantiates blank versions of the form
-#         and its inline formsets.
-#         """
-#         self.object = None
-#         form_class = self.get_form_class()
-#         form = self.get_form(form_class)
-#         ingredient_form = ChosenIngredientFormSet()
-#         fields = ['title','ingredients','image', 'description', 'niva','tid', 'visible']
-#
-#
-#         return self.render_to_response(
-#             self.get_context_data(form=form,
-#                                   ingredient_form=ingredient_form))
-#
-#     def post(self, request, *args, **kwargs):
-#         """
-#         Handles POST requests, instantiating a form instance and its inline
-#         formsets with the passed POST variables and then checking them for
-#         validity.
-#         """
-#         self.object = None
-#         form_class = self.get_form_class()
-#         form = self.get_form(form_class)
-#         ingredient_form = ChosenIngredientFormSet(self.request.POST)
-#         fields = ['title','ingredients','image', 'description', 'niva','tid', 'visible']
-#
-#
-#         if (form.is_valid() and ingredient_form.is_valid()):
-#             return self.form_valid(form, ingredient_form)
-#         else:
-#             return self.form_invalid(form, ingredient_form)
-#
-#     def form_valid(self, form, ingredient_form):
-#         """
-#         Called if all forms are valid. Creates a Recipe instance along with
-#         associated Ingredients and Instructions and then redirects to a
-#         success page.
-#         """
-#         self.object = form.save()
-#         ingredient_form.instance = self.object
-#         ingredient_form.save()
-#
-#         return HttpResponseRedirect(self.get_success_url())
-#
-#     def form_invalid(self, form, ingredient_form, instruction_form):
-#         """
-#         Called if a form is invalid. Re-renders the context data with the
-#         data-filled forms and errors.
-#         """
-#         return self.render_to_response(
-#             self.get_context_data(form=form,
-#                                   ingredient_form=ingredient_form))
-
 # View for oppdatering av oppskrifter
 # Tar inn LoginRequiredMixin, UserPassesTestMixin(krever at innlogget bruker er samme bruker somn har laget oppskriften og UpdateView(ferdig modul i Django))
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -246,16 +175,20 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    # funskjon som tester om brukeren er forfatteren av oppskriften
+
     def test_func(self):
         recipe = self.get_object()
-        if self.request.user == recipe.author or self.request.user.is_staff: # enten er forfatter brukeren selv eller kokk/admin
+        if self.request.user == recipe.author or self.request.user.is_staff:
+            return True
         return False
 
 # View for å slette Oppskrfter og kjører samme krav til bruker
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Recipe
-    success_url = '/' # sender siden tilbake til hjemsiden og sletter oppskeriften fra db
+    success_url = '/'
+    # sender siden tilbake til hjemsiden og sletter oppskeriften fra db
+    # funskjon som tester om brukeren er forfatteren av oppskriften
+    # enten er forfatter brukeren selv eller kokk/admin
 
     def test_func(self):
         recipe = self.get_object()
@@ -313,7 +246,7 @@ def myrecipes(request):
 class GeneratePdf(View):
     # get metoden henter ut hvilken oppskrft det gjelder(hvilken oppskrift man er inne på)
     # sender så denne i en dictionary til render_to_pdf funksjonen som gjør oppskriften om til pdf
-    # Viser så en HttpResponse med denne pdfen 
+    # Viser så en HttpResponse med denne pdfen
     def get(self, request, pk, recipetitle, *args, **kwargs):
         recipe = get_object_or_404(Recipe, pk=pk)
         context = {
