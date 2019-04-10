@@ -3,6 +3,7 @@ django-bootstrap==0.2.4
 django-crispy-forms==1.7.2
 html5lib==1.0.1
 Pillow==6.0.0
+psycopg2==2.8.1
 PyPDF2==1.26.0
 pytz==2018.9
 reportlab==3.5.18
