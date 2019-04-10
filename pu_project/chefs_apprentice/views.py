@@ -81,22 +81,17 @@ def home(request):
 
 def getRecipies(queryset, ingredients):
     count = {}
-    print(ingredients)
     for recipe in queryset:
         count[recipe] = 0
         recipe_ingr = []
         for i in ChosenIngredient.objects.filter(recipe__title=recipe.title):
             recipe_ingr.append(i.ingredient)
-        print(recipe_ingr)
-        print(recipe)
         for i in recipe_ingr:
             for j in ingredients:
                 if i.name == j:
                     count[recipe] += 1
-        print(count[recipe])
         if count[recipe] == 0:
             del count[recipe]
-            print(recipe.title + ' deleted')
 
     # Sorting by number of ingredients matched
     sorted_count = sorted(count.items(), key=lambda kv: kv[1], reverse=True)
