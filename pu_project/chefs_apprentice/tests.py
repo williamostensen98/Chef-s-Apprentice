@@ -34,6 +34,7 @@ class RecipeTest(TestCase):
         self.assertEqual("E", r.niva)  # tester at nivå er standard, E
         self.assertEqual("L", r.tid)  # tsester at tid er standard, L
 
+
 class SearchTest(TestCase):
 
     def create_user(self, username="test_user", password="test_password"):
@@ -63,10 +64,10 @@ class SearchTest(TestCase):
         return r
 
     def test_search_function(self):
-        list=[]
-        r1=self.create_recipe()
-        r2=self.create_recipe2()
-        list.append(r1)
-        list.append(r2)
-        res=getRecipies(list, {'test_ingredient'})
-        self.assertEqual(len(res),1)
+        liste = []
+        r1 = self.create_recipe()
+        r2 = self.create_recipe2()
+        liste.append(r1)
+        liste.append(r2)
+        res = getRecipies(list, {'test_ingredient'})
+        self.assertEqual(len(res), 1)  # tester at kun en av oppskriftene matcher søket
