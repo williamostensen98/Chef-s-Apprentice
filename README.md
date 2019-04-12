@@ -70,7 +70,7 @@ Du vil nå finne siden på 'http://localhost:8000'.
 ## Tester
 Innebygd i prosjektet ligger en pipeline som kjører prosjektets testing hver gang prosjektet oppdateres, slik at det alltid er en fungerende versjon som ligger ute. Status på denne kan ses på gitlab siden til prosjektet under CD/CI og pipelines. Ellers kan også testene kjøres via test.py direkte eller ved kommandoen ```./manage.py test```.  
 
-Mer informasjon om kjøring av testene eller om feilmeldinger finner du [her](https://docs.djangoproject.com/en/2.2/topics/testing/overview/#running-tests).
+Mer informasjon om kjøring av testene eller om feilmeldinger finner du [her](https://docs.djangoproject.com/en/2.2/topics/testing/overview/#running-tests).  
 (_For problemer/feilmelding med ```psycopg2```modulen, se [psycopg2/docs](http://initd.org/psycopg/docs/install.html)_)
 
 
