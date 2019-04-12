@@ -1,5 +1,6 @@
 # Chef's Apprentice 
 Chef's Apprentice er en applikasjon som lar alminnelige brukere og sertifiserte kokker dele og tilgjengeliggjøre sine matoppskrifter for andre brukere av applikasjonen som er laget for og i samarbeid med BackBone Industries LLC.
+Link til nettsiden: [chefsapprentice.com](http://chefsapprentice.herokuapp.com/)
 
 ## Motivasjon
 
