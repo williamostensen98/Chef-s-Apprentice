@@ -18,7 +18,7 @@
 
 <!-- '{% if request.path != '/recipe.title/recipe.id/pdf' %}' -->
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <nav class="navbar navbar-expand-md navbar-dark-sticky bg-steel fixed-top">
         <div class="container">
           <a class="navbar-brand mr-4" href="{% url 'chef-home' %}">Chef´s Apprentice</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,8 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
+
+              <!-- hvis bruker er innlogget -> hvis ikke skal kun login og register vises i navbar -->
               {% if user.is_authenticated %}
               <a class="nav-item nav-link" href="{% url 'recipe-create' %}">New recipe</a>
               <a class="nav-item nav-link" href="{% url 'profile' %}">
@@ -65,6 +67,7 @@
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
+          <!-- tar for seg suksessvarsling når ny bruker blir opprettet -->
           {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -74,6 +77,8 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
+
+        <!-- hvis man er på hjemme-siden(path=..../) så skal søkefeltet vises, og skal ikke vises hvis man er på andre sider  -->
         {% if request.path == "/" %}
           <div class="col-md-4">
             <h1>Search</h1>
@@ -112,13 +117,13 @@
 
 
                  <textfield id= "textboxfield" name="ingredientsBox"rows="2" cols="40" readonly="readonly">
-
-                    {% if current_ingredients %}
-                      {% for i in current_ingredients %}
+                   <!-- Displayer ingrediemsene i en liten rund boks ved midlertidig søk med ingredienser -->
+                    {% if current_ingredients %} <!-- Hvis det er ingredienser lagt til i listen -->
+                      {% for i in current_ingredients %} <!-- Gå gjennom disse -->
 
                           <div class="round-text">
                             <!-- <a href="#" class="close"></a> -->
-                              {{ i }}
+                              {{ i }} <!-- Vis den inni en liten rund boks -->
                           </div>
                       {% endfor %}
 
@@ -139,7 +144,8 @@
 
               </div>
             </div>
-              <!-- <h3>Tips</h3>
+            <!-- For tips funksjon på siden -->
+          <!-- <h3>Tips</h3>
 
 
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
