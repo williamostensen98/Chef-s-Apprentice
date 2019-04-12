@@ -2,7 +2,7 @@
 {% block content%}
 <ul class="nav nav-tabs">
   <li class="nav-item"><a class="nav-link" href="{%url 'profile' %}">Profile</a></li>
-  <li class="nav-item"><a class="nav-link active"  href="#">My Recipies</a></li>
+  <li class="nav-item"><a class="nav-link active"  href="#">My Recipes</a></li>
   <!-- <li class="nav-item"><a class="nav-link"  href="{%url 'downloadedrecipes' %}">Downloaded Recipies</a></li>
   <li class="nav-item"><a class="nav-link"  href="{%url 'favoriterecipes' %}">Favorite Recipies</a></li> -->
 </ul>
@@ -19,7 +19,7 @@
 
 
   {% for recipe in recipies %}
-    {% if request.user == recipe.author %}
+    {% if request.user == recipe.author %} <!-- Hvis brukeren innlogget er forfatteren av oppskriften så skal den vises i my recipes -->
 
       <article class="media recipe-section">
 
@@ -60,6 +60,7 @@
     {% endif %}
   {% endfor  %}
 
+<!--  Paginering - Hvis det er nok oppskrifter på siden så viser disse linjene en pagineringsbar med tall til hver side -->
   <div class="pagination">
     <span class="step-links">
         {% if recipies.has_previous %}

@@ -6,7 +6,7 @@
       {%  csrf_token %}
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">Recipe</legend>
-        {{ form|crispy }}
+        {{ form|crispy }} <!-- Ferdig innebygget modul som fikser på hvordan skjemaet ser ut og at det funker sikkert og ryddig -->
       </fieldset>
       <div class="form-group">
         {% if request.path == '/new/' %}

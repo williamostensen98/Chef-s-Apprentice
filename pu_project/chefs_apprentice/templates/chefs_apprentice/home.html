@@ -1,4 +1,4 @@
-{% extends "chefs_apprentice/base.html" %}
+{% extends "chefs_apprentice/base.html" %} <!-- Utvider html koden skrevet i base.html -->
 {% block content%}
 
 <div class="container">
@@ -25,8 +25,8 @@
 
     </div>
 </div>
-  {% for recipe in recipies %}
-    {% if recipe.visible %}
+  {% for recipe in recipies %} <!-- Går gjennom alle oppskrifter i databasen -->
+    {% if recipe.visible %} <!-- Hvis oppskriften er satt til visible i databasen -->
 
       <article class="media recipe-section">
 

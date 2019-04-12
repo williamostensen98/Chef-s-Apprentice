@@ -11,7 +11,7 @@ admin.site.index_title = "Welcome to Chef's Apprentice Admin Portal"
 class ChosenIngredientInLine(admin.TabularInline):
     model = ChosenIngredient
 
-
+# definerer hva som skal vises på Recipe displayet i admin siden
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ("title", "visible", "author")
     actions = ["make_visible", "make_hidden", "delete_selected"]
@@ -23,6 +23,7 @@ class RecipeAdmin(admin.ModelAdmin):
     class Meta:
         model = Recipe
 
+    # funksjon for å sette make_visible og hidden som actions i admin siden
     def make_visible(self, request, queryset):
         queryset.update(visible=True)
         queryset.update(date_posted=timezone.now())
@@ -30,5 +31,5 @@ class RecipeAdmin(admin.ModelAdmin):
     def make_hidden(self, request, queryset):
         queryset.update(visible=False)
 
-
+# synliggjør disse modellene i admin-siden
 admin.site.register(Recipe, RecipeAdmin)
