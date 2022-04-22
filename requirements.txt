@@ -10,7 +10,7 @@ html5lib==1.0.1
 idna==2.8
 Pillow==6.0.0
 psycopg2==2.8.1
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pytz==2018.9
 reportlab==3.5.18
 requests==2.21.0
